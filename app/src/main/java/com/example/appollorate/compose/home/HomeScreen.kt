@@ -37,7 +37,10 @@ import com.example.appollorate.ui.theme.AppollorateTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    goToStartScreen: () -> Unit,
+    goToInventories: () -> Unit,
+) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -45,7 +48,7 @@ fun HomeScreen() {
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(vertical = 60.dp, horizontal = 5.dp),
+            modifier = Modifier.padding(vertical = 24.dp, horizontal = 5.dp),
         ) {
             Image(
                 painter = painterResource(R.drawable.book_open_solid),
@@ -61,7 +64,7 @@ fun HomeScreen() {
             )
         }
         ElevatedCard(
-            onClick = { /*TODO*/ },
+            onClick = goToStartScreen,
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.primary,
             ),
@@ -91,7 +94,7 @@ fun HomeScreen() {
         Spacer(modifier = Modifier.height(20.dp))
         Row {
             ElevatedCard(
-                onClick = { /*TODO*/ },
+                onClick = goToInventories,
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                 ),
@@ -153,6 +156,6 @@ fun HomeScreen() {
 @Composable
 private fun HomeScreenPreview() {
     AppollorateTheme {
-        HomeScreen()
+        HomeScreen(goToStartScreen = {}, goToInventories = {})
     }
 }

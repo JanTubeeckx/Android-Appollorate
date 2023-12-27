@@ -6,13 +6,16 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import com.example.appollorate.compose.AppolloRateApp
+import com.example.appollorate.compose.utils.AppolloRateNavigationType
 import com.example.appollorate.ui.theme.AppollorateTheme
 
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -22,25 +25,23 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background,
                 ) {
-                    Greeting("Android")
+                    val windowSize = calculateWindowSizeClass(activity = this)
+                    when (windowSize.widthSizeClass) {
+                        WindowWidthSizeClass.Compact -> {
+                            AppolloRateApp(navigationType = AppolloRateNavigationType.BOTTOM_NAVIGATION)
+                        }
+                        WindowWidthSizeClass.Medium -> {
+                            AppolloRateApp(navigationType = AppolloRateNavigationType.NAVIGATION_RAIL)
+                        }
+                        WindowWidthSizeClass.Expanded -> {
+                            AppolloRateApp(navigationType = AppolloRateNavigationType.PERMANENT_NAVIGATION_DRAWER)
+                        }
+                        else -> {
+                            AppolloRateApp(navigationType = AppolloRateNavigationType.BOTTOM_NAVIGATION)
+                        }
+                    }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier,
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    AppollorateTheme {
-        Greeting("Android")
     }
 }
