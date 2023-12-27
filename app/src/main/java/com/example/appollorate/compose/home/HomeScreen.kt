@@ -59,7 +59,7 @@ fun HomeScreen(
             )
             Text(
                 text = stringResource(R.string.APP_NAME),
-                fontSize = 38.sp,
+                fontSize = 40.sp,
                 fontWeight = FontWeight.Bold,
             )
         }
@@ -85,7 +85,7 @@ fun HomeScreen(
                 Text(
                     text = stringResource(R.string.DAMAGE_REGISTRATION),
                     fontSize = 30.sp,
-                    fontWeight = FontWeight.SemiBold,
+                    fontWeight = FontWeight.Medium,
                     color = Color.White,
                     textAlign = TextAlign.Center,
                     modifier = Modifier

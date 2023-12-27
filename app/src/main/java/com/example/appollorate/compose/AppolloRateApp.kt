@@ -92,12 +92,14 @@ fun AppolloRateApp(
                 }
             },
             bottomBar = {
-                AppolloRateBottomAppBar(
-                    goHome = goToHome,
-                    goToStartScreen = goToStartScreen,
-                    goToInventories = goToReservations,
-                    logOut = {},
-                )
+                if (canNavigateBack) {
+                    AppolloRateBottomAppBar(
+                        goHome = goToHome,
+                        goToStartScreen = goToStartScreen,
+                        goToInventories = goToReservations,
+                        logOut = {},
+                    )
+                }
             },
         ) { innerPadding ->
             NavComponent(
