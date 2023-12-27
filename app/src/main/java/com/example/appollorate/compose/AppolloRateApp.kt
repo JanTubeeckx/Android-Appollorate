@@ -27,8 +27,8 @@ import com.example.appollorate.compose.utils.AppolloRateNavigationRail
 import com.example.appollorate.compose.utils.AppolloRateNavigationType
 import com.example.appollorate.compose.utils.AppolloRateTopAppBar
 import com.example.appollorate.compose.utils.NavigationDrawerContent
+import com.example.appollorate.navigation.NavComponent
 import com.example.appollorate.navigation.NavigationOverview
-import com.example.appollorate.navigation.navComponent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -73,7 +73,7 @@ fun AppolloRateApp(
                     )
                 },
             ) { innerPadding ->
-                navComponent(
+                NavComponent(
                     navController = navController,
                     modifier = Modifier.padding(innerPadding),
                 )
@@ -100,7 +100,7 @@ fun AppolloRateApp(
                 )
             },
         ) { innerPadding ->
-            navComponent(
+            NavComponent(
                 navController = navController,
                 modifier = Modifier.padding(innerPadding),
             )
@@ -124,7 +124,7 @@ fun AppolloRateApp(
                     )
                 },
             ) { innerPadding ->
-                navComponent(
+                NavComponent(
                     navController = navController,
                     modifier = Modifier.padding(innerPadding),
                 )

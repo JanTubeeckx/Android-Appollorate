@@ -6,10 +6,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.appollorate.compose.home.HomeScreen
+import com.example.appollorate.compose.identification.IdentificationScreen
 import com.example.appollorate.compose.menu.StartScreen
 
 @Composable
-fun navComponent(
+fun NavComponent(
     navController: NavHostController,
     modifier: Modifier = Modifier,
 ) {
@@ -22,10 +23,10 @@ fun navComponent(
             HomeScreen(goToStartScreen = { navController.navigate(NavigationOverview.StartScreen.name) }, goToInventories = {})
         }
         composable(route = NavigationOverview.StartScreen.name) {
-            StartScreen()
+            StartScreen(goToIdentification = { navController.navigate(NavigationOverview.Identification.name) })
         }
         composable(route = NavigationOverview.Identification.name) {
-            StartScreen()
+            IdentificationScreen()
         }
     }
 }

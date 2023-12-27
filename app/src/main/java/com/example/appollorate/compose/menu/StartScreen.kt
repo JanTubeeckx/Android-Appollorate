@@ -31,7 +31,9 @@ import com.example.appollorate.ui.theme.AppollorateTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun StartScreen() {
+fun StartScreen(
+    goToIdentification: () -> Unit,
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -41,7 +43,7 @@ fun StartScreen() {
     ) {
         Spacer(modifier = Modifier.height(36.dp))
         ElevatedCard(
-            onClick = { /*TODO*/ },
+            onClick = goToIdentification,
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.onPrimary,
             ),
@@ -49,7 +51,7 @@ fun StartScreen() {
                 defaultElevation = 4.dp,
             ),
             modifier = Modifier
-                .size(width = 350.dp, height = 240.dp),
+                .size(width = 320.dp, height = 240.dp),
         ) {
             Column(
                 verticalArrangement = Arrangement.Center,
@@ -80,7 +82,7 @@ fun StartScreen() {
             elevation = CardDefaults.cardElevation(
                 defaultElevation = 4.dp,
             ),
-            modifier = Modifier.size(width = 350.dp, height = 240.dp),
+            modifier = Modifier.size(width = 320.dp, height = 240.dp),
         ) {
             Column(
                 verticalArrangement = Arrangement.Center,
@@ -111,7 +113,7 @@ fun StartScreen() {
             elevation = CardDefaults.cardElevation(
                 defaultElevation = 4.dp,
             ),
-            modifier = Modifier.size(width = 350.dp, height = 240.dp),
+            modifier = Modifier.size(width = 320.dp, height = 240.dp),
         ) {
             Column(
                 verticalArrangement = Arrangement.Center,
@@ -141,6 +143,6 @@ fun StartScreen() {
 @Composable
 fun StartScreenPreview() {
     AppollorateTheme {
-        StartScreen()
+        StartScreen(goToIdentification = {})
     }
 }
