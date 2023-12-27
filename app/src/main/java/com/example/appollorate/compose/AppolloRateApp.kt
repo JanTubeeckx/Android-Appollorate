@@ -83,20 +83,21 @@ fun AppolloRateApp(
         Scaffold(
             containerColor = MaterialTheme.colorScheme.onPrimary,
             topBar = {
-                AppolloRateTopAppBar(
-                    canNavigateBack = canNavigateBack,
-                    navigateUp = navigateUp,
-                    currentScreenTitle = currentScreenTitle,
-                )
+                if (canNavigateBack) {
+                    AppolloRateTopAppBar(
+                        canNavigateBack = canNavigateBack,
+                        navigateUp = navigateUp,
+                        currentScreenTitle = currentScreenTitle,
+                    )
+                }
             },
             bottomBar = {
                 AppolloRateBottomAppBar(
                     goHome = goToHome,
                     goToStartScreen = goToStartScreen,
                     goToInventories = goToReservations,
-                ) {
-//
-                }
+                    logOut = {},
+                )
             },
         ) { innerPadding ->
             navComponent(

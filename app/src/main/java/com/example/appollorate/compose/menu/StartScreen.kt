@@ -34,19 +34,22 @@ import com.example.appollorate.ui.theme.AppollorateTheme
 fun StartScreen() {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween,
+        verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(52.dp)
             .verticalScroll(rememberScrollState()),
     ) {
+        Spacer(modifier = Modifier.height(36.dp))
         ElevatedCard(
             onClick = { /*TODO*/ },
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.onPrimary,
             ),
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 4.dp,
+            ),
             modifier = Modifier
-                .size(width = 320.dp, height = 240.dp),
+                .size(width = 350.dp, height = 240.dp),
         ) {
             Column(
                 verticalArrangement = Arrangement.Center,
@@ -68,13 +71,16 @@ fun StartScreen() {
                 )
             }
         }
-        Spacer(modifier = Modifier.height(35.dp))
+        Spacer(modifier = Modifier.height(36.dp))
         ElevatedCard(
             onClick = { /*TODO*/ },
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.onPrimary,
             ),
-            modifier = Modifier.size(width = 320.dp, height = 240.dp),
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 4.dp,
+            ),
+            modifier = Modifier.size(width = 350.dp, height = 240.dp),
         ) {
             Column(
                 verticalArrangement = Arrangement.Center,
@@ -96,13 +102,16 @@ fun StartScreen() {
                 )
             }
         }
-        Spacer(modifier = Modifier.height(35.dp))
+        Spacer(modifier = Modifier.height(36.dp))
         ElevatedCard(
             onClick = { /*TODO*/ },
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.onPrimary,
             ),
-            modifier = Modifier.size(width = 320.dp, height = 240.dp),
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 4.dp,
+            ),
+            modifier = Modifier.size(width = 350.dp, height = 240.dp),
         ) {
             Column(
                 verticalArrangement = Arrangement.Center,
@@ -124,6 +133,7 @@ fun StartScreen() {
                 )
             }
         }
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }
 

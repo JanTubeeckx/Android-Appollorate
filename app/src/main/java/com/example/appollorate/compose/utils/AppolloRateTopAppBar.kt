@@ -10,7 +10,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -23,7 +22,7 @@ fun AppolloRateTopAppBar(
     TopAppBar(
         colors = TopAppBarDefaults.smallTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = Color.White,
+            titleContentColor = MaterialTheme.colorScheme.onPrimary,
         ),
         title = {
             Text(stringResource(id = currentScreenTitle))
@@ -34,7 +33,7 @@ fun AppolloRateTopAppBar(
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
                         contentDescription = "navigate back",
-                        tint = Color.White,
+                        tint = MaterialTheme.colorScheme.onPrimary,
                     )
                 }
             }

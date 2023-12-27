@@ -48,7 +48,7 @@ fun HomeScreen(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(vertical = 24.dp, horizontal = 5.dp),
+            modifier = Modifier.padding(vertical = 42.dp, horizontal = 5.dp),
         ) {
             Image(
                 painter = painterResource(R.drawable.book_open_solid),
@@ -67,6 +67,9 @@ fun HomeScreen(
             onClick = goToStartScreen,
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.primary,
+            ),
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 4.dp,
             ),
             modifier = Modifier.size(width = 320.dp, height = 240.dp),
         ) {
@@ -98,6 +101,9 @@ fun HomeScreen(
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                 ),
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 4.dp,
+                ),
                 modifier = Modifier.size(width = 150.dp, height = 120.dp),
             ) {
                 Column(
@@ -125,6 +131,9 @@ fun HomeScreen(
                 onClick = { /*TODO*/ },
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.primary,
+                ),
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 4.dp,
                 ),
                 modifier = Modifier.size(width = 150.dp, height = 120.dp),
             ) {
