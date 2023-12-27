@@ -3,4 +3,7 @@
     <string name="APP_NAME">AppolloRate.</string>
     <string name="DAMAGE_REGISTRATION">Schaderegistratie</string>
     <string name="INVENTORIES">Inventarisaties</string>
+    <string name="IDENTIFICATION">Identificatie</string>
+    <string name="PROTECTION">Bescherming</string>
+    <string name="SHAPE_AND_DAMAGE">Vorm en schade</string>
 </resources>
