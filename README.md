@@ -1,2 +1,2 @@
 # Android-Appollorate
-Android app for inventory tool
+Android app for an online inventory tool for damage to books.
