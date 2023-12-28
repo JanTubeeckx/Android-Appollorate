@@ -23,6 +23,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,6 +39,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.appollorate.R
+import com.example.appollorate.compose.login.LoginScreen
 import com.example.appollorate.ui.theme.AppollorateTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,6 +48,11 @@ fun HomeScreen(
     goToStartScreen: () -> Unit,
     goToInventories: () -> Unit,
 ) {
+    var showLogin by remember { mutableStateOf(true) }
+
+    if (showLogin) {
+        LoginScreen(onDismissRequest = { showLogin = false })
+    }
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -56,13 +66,13 @@ fun HomeScreen(
                 painter = painterResource(R.drawable.book_open_solid),
                 contentDescription = null,
                 modifier = Modifier
-                    .size(70.dp)
-                    .padding(start = 8.dp, top = 13.dp, end = 12.dp, bottom = 8.dp),
+                    .size(60.dp)
+                    .padding(8.dp),
             )
             Text(
                 text = stringResource(R.string.APP_NAME),
-                fontSize = 40.sp,
-                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.ExtraBold,
             )
         }
         ElevatedCard(
@@ -78,17 +88,21 @@ fun HomeScreen(
         ) {
             Column(
                 verticalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxHeight().padding(16.dp),
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .padding(16.dp),
             ) {
                 Icon(
                     imageVector = Icons.Filled.Assignment,
                     contentDescription = null,
-                    modifier = Modifier.fillMaxWidth().size(75.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .size(75.dp),
                 )
                 Text(
                     text = stringResource(R.string.DAMAGE_REGISTRATION),
                     fontSize = 30.sp,
-                    fontWeight = FontWeight.Medium,
+                    fontWeight = FontWeight.Bold,
                     color = Color.White,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
@@ -112,12 +126,16 @@ fun HomeScreen(
             ) {
                 Column(
                     verticalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxHeight().padding(16.dp),
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .padding(16.dp),
                 ) {
                     Icon(
                         imageVector = Icons.Filled.List,
                         contentDescription = null,
-                        modifier = Modifier.fillMaxWidth().size(55.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .size(55.dp),
                     )
                     Text(
                         text = stringResource(R.string.INVENTORIES),
@@ -144,12 +162,17 @@ fun HomeScreen(
             ) {
                 Column(
                     verticalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxHeight().padding(16.dp),
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .padding(16.dp),
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Info,
                         contentDescription = null,
-                        modifier = Modifier.fillMaxWidth().size(55.dp).padding(5.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .size(55.dp)
+                            .padding(5.dp),
                     )
                     Text(
                         text = stringResource(R.string.APP_NAME),

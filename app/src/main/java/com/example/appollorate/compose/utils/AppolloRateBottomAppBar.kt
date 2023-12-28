@@ -43,13 +43,13 @@ fun AppolloRateBottomAppBar(
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     IconButton(
                         onClick = goHome,
-                        modifier = Modifier.size(105.dp),
+                        modifier = Modifier.size(110.dp),
                     ) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Icon(Icons.Filled.Home, contentDescription = "navigate to home screen")
                             Text(
                                 text = "Homepage",
-                                fontSize = 12.sp,
+                                fontSize = 13.sp,
                             )
                         }
                     }
@@ -57,7 +57,7 @@ fun AppolloRateBottomAppBar(
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     IconButton(
                         onClick = goToStartScreen,
-                        modifier = Modifier.size(105.dp),
+                        modifier = Modifier.size(110.dp),
                     ) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Icon(
@@ -66,7 +66,7 @@ fun AppolloRateBottomAppBar(
                             )
                             Text(
                                 text = stringResource(R.string.DAMAGE_REGISTRATION),
-                                fontSize = 12.sp,
+                                fontSize = 13.sp,
                             )
                         }
                     }
@@ -74,7 +74,7 @@ fun AppolloRateBottomAppBar(
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     IconButton(
                         onClick = goToInventories,
-                        modifier = Modifier.size(105.dp),
+                        modifier = Modifier.size(110.dp),
                     ) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Icon(
@@ -83,7 +83,7 @@ fun AppolloRateBottomAppBar(
                             )
                             Text(
                                 text = stringResource(R.string.INVENTORIES),
-                                fontSize = 12.sp,
+                                fontSize = 13.sp,
                             )
                         }
                     }
@@ -91,7 +91,7 @@ fun AppolloRateBottomAppBar(
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     IconButton(
                         onClick = logOut,
-                        modifier = Modifier.size(105.dp),
+                        modifier = Modifier.size(110.dp),
                     ) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Icon(
@@ -100,7 +100,7 @@ fun AppolloRateBottomAppBar(
                             )
                             Text(
                                 text = "Log out",
-                                fontSize = 12.sp,
+                                fontSize = 13.sp,
                             )
                         }
                     }

@@ -25,7 +25,10 @@ fun AppolloRateTopAppBar(
             titleContentColor = MaterialTheme.colorScheme.onPrimary,
         ),
         title = {
-            Text(stringResource(id = currentScreenTitle))
+            Text(
+                stringResource(id = currentScreenTitle),
+                style = MaterialTheme.typography.titleSmall,
+            )
         },
         navigationIcon = {
             if (canNavigateBack) {

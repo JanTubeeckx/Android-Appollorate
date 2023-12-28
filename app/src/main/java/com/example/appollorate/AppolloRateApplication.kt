@@ -5,6 +5,7 @@ import com.example.appollorate.data.AppContainer
 import com.example.appollorate.data.DefaultAppContainer
 
 class AppolloRateApplication : Application() {
+
     lateinit var container: AppContainer
 
     override fun onCreate() {
