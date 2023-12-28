@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Assignment
 import androidx.compose.material.icons.filled.Info
@@ -25,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -69,8 +71,9 @@ fun HomeScreen(
                 containerColor = MaterialTheme.colorScheme.primary,
             ),
             elevation = CardDefaults.cardElevation(
-                defaultElevation = 4.dp,
+                defaultElevation = dimensionResource(R.dimen.default_elevation),
             ),
+            shape = RoundedCornerShape(dimensionResource(R.dimen.card_corner_radius)),
             modifier = Modifier.size(width = 320.dp, height = 240.dp),
         ) {
             Column(
@@ -94,7 +97,7 @@ fun HomeScreen(
                 )
             }
         }
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         Row {
             ElevatedCard(
                 onClick = goToInventories,
@@ -102,9 +105,10 @@ fun HomeScreen(
                     containerColor = MaterialTheme.colorScheme.primary,
                 ),
                 elevation = CardDefaults.cardElevation(
-                    defaultElevation = 4.dp,
+                    defaultElevation = dimensionResource(R.dimen.default_elevation),
                 ),
-                modifier = Modifier.size(width = 150.dp, height = 120.dp),
+                shape = RoundedCornerShape(dimensionResource(R.dimen.card_corner_radius)),
+                modifier = Modifier.size(width = 152.dp, height = 120.dp),
             ) {
                 Column(
                     verticalArrangement = Arrangement.Center,
@@ -126,16 +130,17 @@ fun HomeScreen(
                     )
                 }
             }
-            Spacer(modifier = Modifier.width(20.dp))
+            Spacer(modifier = Modifier.width(16.dp))
             ElevatedCard(
                 onClick = { /*TODO*/ },
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                 ),
                 elevation = CardDefaults.cardElevation(
-                    defaultElevation = 4.dp,
+                    defaultElevation = dimensionResource(R.dimen.default_elevation),
                 ),
-                modifier = Modifier.size(width = 150.dp, height = 120.dp),
+                shape = RoundedCornerShape(dimensionResource(R.dimen.card_corner_radius)),
+                modifier = Modifier.size(width = 152.dp, height = 120.dp),
             ) {
                 Column(
                     verticalArrangement = Arrangement.Center,

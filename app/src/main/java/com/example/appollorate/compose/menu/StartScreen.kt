@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -19,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -41,17 +43,18 @@ fun StartScreen(
             .fillMaxWidth()
             .verticalScroll(rememberScrollState()),
     ) {
-        Spacer(modifier = Modifier.height(36.dp))
+        Spacer(modifier = Modifier.height(14.dp))
         ElevatedCard(
             onClick = goToIdentification,
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.onPrimary,
             ),
             elevation = CardDefaults.cardElevation(
-                defaultElevation = 4.dp,
+                defaultElevation = dimensionResource(R.dimen.default_elevation),
             ),
+            shape = RoundedCornerShape(dimensionResource(R.dimen.card_corner_radius)),
             modifier = Modifier
-                .size(width = 320.dp, height = 240.dp),
+                .size(width = 370.dp, height = 160.dp),
         ) {
             Column(
                 verticalArrangement = Arrangement.Center,
@@ -61,7 +64,7 @@ fun StartScreen(
                     painter = painterResource(id = R.drawable.address_card_solid),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.fillMaxWidth().size(75.dp),
+                    modifier = Modifier.fillMaxWidth().size(53.dp),
                 )
                 Text(
                     text = stringResource(R.string.IDENTIFICATION),
@@ -73,16 +76,17 @@ fun StartScreen(
                 )
             }
         }
-        Spacer(modifier = Modifier.height(36.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         ElevatedCard(
             onClick = { /*TODO*/ },
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.onPrimary,
             ),
             elevation = CardDefaults.cardElevation(
-                defaultElevation = 4.dp,
+                defaultElevation = dimensionResource(R.dimen.default_elevation),
             ),
-            modifier = Modifier.size(width = 320.dp, height = 240.dp),
+            shape = RoundedCornerShape(dimensionResource(R.dimen.card_corner_radius)),
+            modifier = Modifier.size(width = 370.dp, height = 160.dp),
         ) {
             Column(
                 verticalArrangement = Arrangement.Center,
@@ -92,7 +96,7 @@ fun StartScreen(
                     painter = painterResource(id = R.drawable.box_solid),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.fillMaxWidth().size(75.dp),
+                    modifier = Modifier.fillMaxWidth().size(53.dp),
                 )
                 Text(
                     text = stringResource(R.string.PROTECTION),
@@ -104,16 +108,17 @@ fun StartScreen(
                 )
             }
         }
-        Spacer(modifier = Modifier.height(36.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         ElevatedCard(
             onClick = { /*TODO*/ },
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.onPrimary,
             ),
             elevation = CardDefaults.cardElevation(
-                defaultElevation = 4.dp,
+                defaultElevation = dimensionResource(R.dimen.default_elevation),
             ),
-            modifier = Modifier.size(width = 320.dp, height = 240.dp),
+            shape = RoundedCornerShape(dimensionResource(R.dimen.card_corner_radius)),
+            modifier = Modifier.size(width = 370.dp, height = 160.dp),
         ) {
             Column(
                 verticalArrangement = Arrangement.Center,
@@ -123,7 +128,7 @@ fun StartScreen(
                     painter = painterResource(id = R.drawable.file_pen_solid),
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.fillMaxWidth().size(75.dp),
+                    modifier = Modifier.fillMaxWidth().size(53.dp),
                 )
                 Text(
                     text = stringResource(R.string.SHAPE_AND_DAMAGE),
