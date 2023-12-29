@@ -1,16 +1,12 @@
-package com.example.appollorate.viewmodels
+package com.example.appollorate.compose.inventoryfield
 
-import android.text.Spannable.Factory
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.appollorate.AppolloRateApplication
-import com.example.appollorate.compose.inventory.InventoryFieldListState
-import com.example.appollorate.compose.inventory.InventoryFieldState
 import com.example.appollorate.data.inventoryfield.InventoryFieldRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

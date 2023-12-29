@@ -18,6 +18,8 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
@@ -25,13 +27,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.appollorate.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
+    loginViewModel: LoginViewModel = viewModel(factory = LoginViewModel.Factory),
     onDismissRequest: () -> Unit,
 ) {
+    val loginState by loginViewModel.uiState.collectAsState()
+
     Dialog(
         onDismissRequest = onDismissRequest,
         properties = DialogProperties(
@@ -45,7 +51,7 @@ fun LoginScreen(
                 elevation = CardDefaults.cardElevation(
                     defaultElevation = dimensionResource(R.dimen.default_elevation),
                 ),
-                modifier = Modifier.size(width = 380.dp, height = 420.dp),
+                modifier = Modifier.size(width = 380.dp, height = 400.dp),
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -64,13 +70,17 @@ fun LoginScreen(
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     OutlinedTextField(
-                        value = "",
-                        onValueChange = {},
-                        label = { Text(text = "Gebruikersnaam") },
+                        value = loginState.email,
+                        onValueChange = {
+                            loginViewModel.setEmail(it)
+                        },
+                        label = { Text(text = "Email") },
                     )
                     OutlinedTextField(
-                        value = "",
-                        onValueChange = {},
+                        value = loginState.password,
+                        onValueChange = {
+                            loginViewModel.setPassword(it)
+                        },
                         label = { Text(text = "Wachtwoord") },
                     )
                     Spacer(modifier = Modifier.height(36.dp))
@@ -88,7 +98,9 @@ fun LoginScreen(
                             )
                         }
                         TextButton(
-                            onClick = { /*TODO*/ },
+                            onClick = {
+                                loginViewModel.loginUser()
+                            },
                             shape = RoundedCornerShape(5.dp),
                         ) {
                             Text(

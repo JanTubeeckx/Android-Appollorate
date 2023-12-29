@@ -1,4 +1,4 @@
-package com.example.appollorate.compose.inventory
+package com.example.appollorate.compose.inventoryfield
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.appollorate.R
-import com.example.appollorate.viewmodels.InventoryFieldViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

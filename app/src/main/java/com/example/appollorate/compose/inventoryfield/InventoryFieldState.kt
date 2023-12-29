@@ -1,4 +1,4 @@
-package com.example.appollorate.compose.inventory
+package com.example.appollorate.compose.inventoryfield
 
 import com.example.appollorate.data.inventoryfield.InventoryField
 
