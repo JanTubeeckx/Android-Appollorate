@@ -35,6 +35,10 @@ class InventoryFieldViewModel(
         _uiState.update { it.copy(showDropDown = true) }
     }
 
+    fun setRadioInput(input: String) {
+        _uiState.update { it.copy(selectedRadioOption = input) }
+    }
+
     fun setInput(id: String, input: String) {
         val inputValues = uiState.value.input.toMutableMap()
         inputValues[id] = input

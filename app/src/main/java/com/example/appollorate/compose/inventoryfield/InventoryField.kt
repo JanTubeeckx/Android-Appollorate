@@ -1,22 +1,29 @@
 package com.example.appollorate.compose.inventoryfield
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.appollorate.R
 import com.example.appollorate.data.model.InventoryField
@@ -76,6 +83,34 @@ fun InventoryField(
                 }
             }
         "number" -> TextField(value = "test", onValueChange = {})
-        "radio" -> TextField(value = "test", onValueChange = {})
+        "radio" -> {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = "Is het boek gebonden?",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.SemiBold,
+                )
+                Row {
+                    inventoryFieldState.radioOptions.forEach {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            RadioButton(
+                                selected = (it == inventoryFieldState.selectedRadioOption),
+                                onClick = { inventoryFieldViewModel.setRadioInput(it) },
+                            )
+                            Text(
+                                text = it,
+                                fontSize = 18.sp,
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(24.dp))
+                    }
+                }
+            }
+        }
     }
 }
