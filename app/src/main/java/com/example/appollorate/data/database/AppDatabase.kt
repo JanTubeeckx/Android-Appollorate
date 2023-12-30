@@ -6,11 +6,14 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.appollorate.data.inventoryfield.DbInventoryField
 import com.example.appollorate.data.inventoryfield.InventoryFieldDao
+import com.example.appollorate.data.inventorystep.DbInventoryStep
+import com.example.appollorate.data.inventorystep.InventoryStepDao
 
-@Database(entities = [DbInventoryField::class], version = 3, exportSchema = false)
+@Database(entities = [DbInventoryField::class, DbInventoryStep::class], version = 4, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun inventoryFieldDao(): InventoryFieldDao
+    abstract fun inventoryStepDao(): InventoryStepDao
 
     companion object {
         @Volatile
