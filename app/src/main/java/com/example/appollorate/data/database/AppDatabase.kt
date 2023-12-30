@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.example.appollorate.data.inventoryfield.DbInventoryField
 import com.example.appollorate.data.inventoryfield.InventoryFieldDao
 
-@Database(entities = [DbInventoryField::class], version = 1, exportSchema = false)
+@Database(entities = [DbInventoryField::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun inventoryFieldDao(): InventoryFieldDao

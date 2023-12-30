@@ -1,19 +1,24 @@
 package com.example.appollorate.data.login
 
+import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringSetPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
+import kotlinx.coroutines.flow.firstOrNull
 
-interface LoginPreferences {
-    suspend fun saveLoginToken(loginToken: String)
-}
-class LoginPreferencesImpl(private val dataStore: DataStore<Preferences>) {
-    val AUTH_KEY = stringSetPreferencesKey("auth_key")
+class LoginPreferences(private val context: Context) {
+    val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "LocalData")
+    val AUTH_KEY = stringPreferencesKey("auth_key")
 
     suspend fun saveLoginToken(loginToken: String) {
-        dataStore.edit { pref ->
-            pref[AUTH_KEY] = setOf(loginToken)
+        context.dataStore.edit { LocalData ->
+            LocalData[AUTH_KEY] = loginToken
         }
+    }
+
+    suspend fun getLoginToken(): String? {
+        return context.dataStore.data.firstOrNull()?.get(AUTH_KEY)
     }
 }

@@ -40,7 +40,9 @@ class InventoryFieldViewModel(
         try {
             viewModelScope.launch { inventoryFieldRepository.refresh() }
 
-            uiListState = inventoryFieldRepository.getInventoryFieldsByInventoryStepId("7f28c5f9-d711-4cd6-ac15-d13d71abaa01").map { InventoryFieldListState(it) }
+            uiListState = inventoryFieldRepository.getInventoryFieldsByInventoryStepId(
+                "7f28c5f9-d711-4cd6-ac15-d13d71abaa01",
+            ).map { InventoryFieldListState(it) }
                 .stateIn(
                     scope = viewModelScope,
                     started = SharingStarted.WhileSubscribed(5_000L),

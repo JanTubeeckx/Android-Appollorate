@@ -186,6 +186,22 @@ fun HomeScreen(
                 }
             }
         }
+        Spacer(modifier = Modifier.height(42.dp))
+/*        Text(
+            text = "De",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.SemiBold,
+        )*/
+        Text(
+            text = "De inventarisatietool",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.SemiBold,
+        )
+        Text(
+            text = "voor boeken.",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.SemiBold,
+        )
     }
 }
 

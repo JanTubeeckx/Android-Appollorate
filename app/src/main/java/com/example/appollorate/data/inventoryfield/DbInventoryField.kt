@@ -2,6 +2,7 @@ package com.example.appollorate.data.inventoryfield
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.appollorate.data.model.InventoryField
 
 @Entity(tableName = "inventory_fields")
 data class DbInventoryField(
@@ -9,9 +10,9 @@ data class DbInventoryField(
     val id: String = "",
     val description: String = "",
     val type: String = "",
-    val inventoryStepId: String = "",
-    val dropdownFieldId: String = "",
-    val hasDamage: Boolean = false,
+    val inventoryStepId: String? = "",
+    val dropdownFieldId: String? = "",
+    val hasDamage: Boolean? = false,
 )
 
 fun DbInventoryField.asDomainInventoryField(): InventoryField {

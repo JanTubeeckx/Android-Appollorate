@@ -20,8 +20,8 @@ class LoginRepositoryImpl(
     override suspend fun login(loginRequest: LoginRequest) {
         try {
             val response = loginApiService.loginUser(loginRequest)
-            println(response.token)
-            // preferences.saveLoginToken(response.token)
+            // println(response.token)
+            preferences.saveLoginToken(response.token)
         } catch (e: IOException) {
             Log.i("Error", "${e.message}")
         } catch (e: HttpException) {

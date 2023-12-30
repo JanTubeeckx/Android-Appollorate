@@ -11,5 +11,7 @@ interface InventoryFieldApiService {
 }
 
 fun InventoryFieldApiService.getInventoryFieldsAsFlow(): Flow<List<ApiInventoryField>> = flow {
-    emit(getInventoryFieldsByInventoryStepId(stepId = "7f28c5f9-d711-4cd6-ac15-d13d71abaa01"))
+    emit(
+        getInventoryFieldsByInventoryStepId(stepId = "7f28c5f9-d711-4cd6-ac15-d13d71abaa01"),
+    )
 }

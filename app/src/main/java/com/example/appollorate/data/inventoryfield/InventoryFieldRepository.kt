@@ -4,14 +4,14 @@ import android.util.Log
 import com.example.appollorate.api.inventoryfield.InventoryFieldApiService
 import com.example.appollorate.api.inventoryfield.asDomainObjects
 import com.example.appollorate.api.inventoryfield.getInventoryFieldsAsFlow
+import com.example.appollorate.data.model.InventoryField
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import java.net.SocketTimeoutException
 
 interface InventoryFieldRepository {
-    fun getInventoryFieldsByInventoryStepId(inventoryStepId: String): Flow<List<InventoryField>>
+    fun getInventoryFieldsByInventoryStepId(stepId: String): Flow<List<InventoryField>>
 
     suspend fun insertInventoryField(inventoryField: InventoryField)
     suspend fun refresh()

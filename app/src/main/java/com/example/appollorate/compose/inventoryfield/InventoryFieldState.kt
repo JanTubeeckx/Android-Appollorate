@@ -1,6 +1,6 @@
 package com.example.appollorate.compose.inventoryfield
 
-import com.example.appollorate.data.inventoryfield.InventoryField
+import com.example.appollorate.data.model.InventoryField
 
 data class InventoryFieldState(
     val showDropDown: Boolean = false,

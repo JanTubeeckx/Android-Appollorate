@@ -31,7 +31,6 @@ class LoginViewModel(
         _uiState.update {
             it.copy(password = password)
         }
-        println(_uiState.value.password)
     }
 
     fun loginUser() {

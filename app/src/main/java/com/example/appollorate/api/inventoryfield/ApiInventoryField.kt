@@ -1,6 +1,6 @@
 package com.example.appollorate.api.inventoryfield
 
-import com.example.appollorate.data.inventoryfield.InventoryField
+import com.example.appollorate.data.model.InventoryField
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.Serializable
@@ -10,9 +10,9 @@ data class ApiInventoryField(
     val id: String,
     val description: String,
     val type: String,
-    val inventoryStepId: String,
-    val dropdownFieldId: String,
-    val hasDamage: Boolean,
+    val inventoryStepId: String?,
+    val dropdownFieldId: String?,
+    val hasDamage: Boolean?,
 )
 
 fun Flow<List<ApiInventoryField>>.asDomainObjects(): Flow<List<InventoryField>> {

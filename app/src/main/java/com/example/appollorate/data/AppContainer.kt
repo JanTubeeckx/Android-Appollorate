@@ -10,6 +10,7 @@ import com.example.appollorate.data.login.LoginPreferences
 import com.example.appollorate.data.login.LoginRepository
 import com.example.appollorate.data.login.LoginRepositoryImpl
 import com.google.gson.GsonBuilder
+import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -26,7 +27,16 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
     val intercepter = HttpLoggingInterceptor().apply {
         this.level = HttpLoggingInterceptor.Level.BODY
     }
+
+    private val loginPreferences = LoginPreferences(context)
+
     val client = OkHttpClient.Builder().apply {
+        this.addInterceptor { chain ->
+            val token = runBlocking { loginPreferences.getLoginToken() }
+            println(token)
+            val request = chain.request().newBuilder().addHeader("Authorization", "Bearer $token").build()
+            chain.proceed(request)
+        }
         this.addInterceptor(intercepter)
     }.build()
 
@@ -41,10 +51,6 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
 
     private val loginRetrofitService: LoginApiService by lazy {
         retrofit.create(LoginApiService::class.java)
-    }
-
-    private val loginPreferences: LoginPreferences by lazy {
-        retrofit.create(LoginPreferences::class.java)
     }
 
     override val loginRepository: LoginRepository by lazy {
