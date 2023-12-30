@@ -1,6 +1,9 @@
 package com.example.appollorate.compose.login
 
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -21,6 +24,9 @@ class LoginViewModel(
     private val _uiState = MutableStateFlow(LoginState())
     val uiState: StateFlow<LoginState> = _uiState.asStateFlow()
 
+    var loginApiState: LoginApiState by mutableStateOf(LoginApiState.Loading)
+        private set
+
     fun setEmail(email: String) {
         _uiState.update {
             it.copy(email = email)
@@ -40,7 +46,19 @@ class LoginViewModel(
                 password = _uiState.value.password,
             )
             val result = loginRepository.login(loginRequest)
+            if (result != null) {
+                loginApiState = LoginApiState.Success
+            }
             Log.i("Test", "$result")
+        }
+    }
+
+    fun cancel() {
+        _uiState.update { currentState ->
+            currentState.copy(
+                email = "",
+                password = "",
+            )
         }
     }
 

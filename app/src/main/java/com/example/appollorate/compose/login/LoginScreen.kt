@@ -89,7 +89,7 @@ fun LoginScreen(
                         modifier = Modifier.fillMaxWidth(),
                     ) {
                         TextButton(
-                            onClick = { onDismissRequest() },
+                            onClick = { loginViewModel.cancel() },
                             shape = RoundedCornerShape(5.dp),
                         ) {
                             Text(
@@ -100,6 +100,7 @@ fun LoginScreen(
                         TextButton(
                             onClick = {
                                 loginViewModel.loginUser()
+                                onDismissRequest()
                             },
                             shape = RoundedCornerShape(5.dp),
                         ) {

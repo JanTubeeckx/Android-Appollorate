@@ -38,8 +38,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.appollorate.R
+import com.example.appollorate.compose.login.LoginApiState
 import com.example.appollorate.compose.login.LoginScreen
+import com.example.appollorate.compose.login.LoginViewModel
 import com.example.appollorate.ui.theme.AppollorateTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,10 +50,11 @@ import com.example.appollorate.ui.theme.AppollorateTheme
 fun HomeScreen(
     goToStartScreen: () -> Unit,
     goToInventories: () -> Unit,
+    loginViewModel: LoginViewModel = viewModel(factory = LoginViewModel.Factory),
 ) {
     var showLogin by remember { mutableStateOf(true) }
 
-    if (showLogin) {
+    if (loginViewModel.loginApiState != LoginApiState.Success && showLogin) {
         LoginScreen(onDismissRequest = { showLogin = false })
     }
     Column(
@@ -186,12 +190,7 @@ fun HomeScreen(
                 }
             }
         }
-        Spacer(modifier = Modifier.height(42.dp))
-/*        Text(
-            text = "De",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.SemiBold,
-        )*/
+        Spacer(modifier = Modifier.height(46.dp))
         Text(
             text = "De inventarisatietool",
             fontSize = 24.sp,

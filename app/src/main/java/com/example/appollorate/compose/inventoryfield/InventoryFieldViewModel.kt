@@ -27,12 +27,18 @@ class InventoryFieldViewModel(
 
     lateinit var uiListState: StateFlow<InventoryFieldListState>
 
+    init {
+        getRepoInventoryFields()
+    }
+
     fun showDropDown() {
         _uiState.update { it.copy(showDropDown = true) }
     }
 
-    init {
-        getRepoInventoryFields()
+    fun setInput(id: String, input: String) {
+        val inputValues = uiState.value.input.toMutableMap()
+        inputValues[id] = input
+        _uiState.update { it.copy(input = inputValues) }
     }
 
     fun getRepoInventoryFields() {
