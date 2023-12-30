@@ -10,8 +10,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.appollorate.compose.inventoryfield.InventoryField
-import com.example.appollorate.ui.theme.AppollorateTheme
 import com.example.appollorate.compose.inventoryfield.InventoryFieldViewModel
+import com.example.appollorate.ui.theme.AppollorateTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -19,53 +19,13 @@ fun IdentificationScreen(
     inventoryFieldViewModel: InventoryFieldViewModel = viewModel(factory = InventoryFieldViewModel.Factory),
 ) {
     val inventoryFieldListState by inventoryFieldViewModel.uiListState.collectAsState()
-    /*Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(24.dp),
-    ) {
-        OutlinedTextField(
-            value = "",
-            onValueChange = {},
-            label = { Text(text = "Titel") },
-            modifier = Modifier.fillMaxWidth(),
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        OutlinedTextField(
-            value = "",
-            onValueChange = {},
-            label = { Text(text = "Auteur") },
-            modifier = Modifier.fillMaxWidth(),
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        OutlinedTextField(
-            value = "",
-            onValueChange = {},
-            label = { Text(text = "Jaartal") },
-            modifier = Modifier.fillMaxWidth(),
-        )
-        Spacer(modifier = Modifier.height(24.dp))
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            ElevatedButton(
-                onClick = { *//*TODO*//* },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                ),
-                shape = RoundedCornerShape(5.dp),
-            ) {
-                Text(text = stringResource(R.string.NEXT))
-            }
-        }
-    }*/
     val lazyListState = rememberLazyListState()
+
     LazyColumn(
         state = lazyListState,
     ) {
         items(inventoryFieldListState.inventoryFieldList) {
-            InventoryField()
+            InventoryField(type = it.type)
         }
     }
 }

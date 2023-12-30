@@ -25,9 +25,9 @@ class CachingInventoryFieldRepository(
         return inventoryFieldDao.getIdentificationInventoryFieldsByInventoryStepId(stepId).map {
             it.asDomainInventoryFields()
         }.onEach {
-            if (it.isEmpty()) {
+          /*  if (it.isEmpty()) {
                 refresh()
-            }
+            }*/
         }
     }
 

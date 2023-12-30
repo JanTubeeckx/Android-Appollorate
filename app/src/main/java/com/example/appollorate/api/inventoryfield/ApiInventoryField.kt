@@ -10,8 +10,8 @@ data class ApiInventoryField(
     val id: String,
     val description: String,
     val type: String,
-    val inventoryStepId: String?,
-    val dropdownFieldId: String?,
+    val inventoryStep_id: String?,
+    val dropdownField_id: String?,
     val hasDamage: Boolean?,
 )
 
@@ -27,8 +27,8 @@ fun List<ApiInventoryField>.asDomainObjects(): List<InventoryField> {
             it.id,
             it.description,
             it.type,
-            it.inventoryStepId,
-            it.dropdownFieldId,
+            it.inventoryStep_id,
+            it.dropdownField_id,
             it.hasDamage,
         )
     }

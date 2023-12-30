@@ -32,8 +32,7 @@ class InventoryFieldViewModel(
     }
 
     init {
-        val result = getRepoInventoryFields()
-        println(result)
+        getRepoInventoryFields()
     }
 
     fun getRepoInventoryFields() {

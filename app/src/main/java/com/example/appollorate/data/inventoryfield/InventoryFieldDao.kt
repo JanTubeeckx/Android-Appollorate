@@ -11,6 +11,6 @@ interface InventoryFieldDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(inventoryField: DbInventoryField)
 
-    @Query("SELECT * FROM inventory_fields WHERE inventoryStepId = :inventoryStepId")
+    @Query("SELECT * FROM inventory_fields WHERE inventoryStep_id = :inventoryStepId")
     fun getIdentificationInventoryFieldsByInventoryStepId(inventoryStepId: String): Flow<List<DbInventoryField>>
 }

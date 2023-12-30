@@ -20,12 +20,12 @@ import com.example.appollorate.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InventoryField(
+    type: String,
     inventoryFieldViewModel: InventoryFieldViewModel = viewModel(factory = InventoryFieldViewModel.Factory),
 ) {
-    val fieldType: String = ""
     val inventoryFieldState by inventoryFieldViewModel.uiState.collectAsState()
 
-    when (fieldType) {
+    when (type) {
         "text" -> TextField(value = "test", onValueChange = {})
         "select" ->
             ExposedDropdownMenuBox(

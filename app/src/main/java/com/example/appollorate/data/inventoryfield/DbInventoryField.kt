@@ -10,8 +10,8 @@ data class DbInventoryField(
     val id: String = "",
     val description: String = "",
     val type: String = "",
-    val inventoryStepId: String? = "",
-    val dropdownFieldId: String? = "",
+    val inventoryStep_id: String? = "",
+    val dropdownField_id: String? = "",
     val hasDamage: Boolean? = false,
 )
 
@@ -20,8 +20,8 @@ fun DbInventoryField.asDomainInventoryField(): InventoryField {
         this.id,
         this.description,
         this.type,
-        this.inventoryStepId,
-        this.dropdownFieldId,
+        this.inventoryStep_id,
+        this.dropdownField_id,
         this.hasDamage,
     )
 }
@@ -31,8 +31,8 @@ fun InventoryField.asDbInventoryField(): DbInventoryField {
         id = this.id,
         description = this.description,
         type = this.type,
-        inventoryStepId = this.inventoryStepId,
-        dropdownFieldId = this.dropdownFieldId,
+        inventoryStep_id = this.inventoryStep_id,
+        dropdownField_id = this.dropdownField_id,
         hasDamage = this.hasDamage,
     )
 }
@@ -43,8 +43,8 @@ fun List<DbInventoryField>.asDomainInventoryFields(): List<InventoryField> {
             it.id,
             it.description,
             it.type,
-            it.inventoryStepId,
-            it.dropdownFieldId,
+            it.inventoryStep_id,
+            it.dropdownField_id,
             it.hasDamage,
         )
     }
