@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.appollorate.AppolloRateApplication
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,8 +14,25 @@ class InventoryFieldViewModel() : ViewModel() {
     private val _uiState = MutableStateFlow(InventoryFieldState())
     val uiState: StateFlow<InventoryFieldState> = _uiState.asStateFlow()
 
-    fun showDropDown() {
-        _uiState.update { it.copy(showDropDown = true) }
+    fun showDropDown(id: String): Boolean {
+        val dropDownState = uiState.value.showDropDown.toMutableMap()
+        dropDownState[id] = true
+        _uiState.update { it.copy(showDropDown = dropDownState) }
+        return dropDownState[id]!!
+    }
+
+    fun hideDropDown(id: String, value: String): Boolean {
+        val dropDownState = uiState.value.showDropDown.toMutableMap()
+        dropDownState[id] = false
+        val dropDownValue = uiState.value.dropDownValue.toMutableMap()
+        dropDownValue[id] = value
+        _uiState.update {
+            it.copy(
+                showDropDown = dropDownState,
+                dropDownValue = dropDownValue,
+            )
+        }
+        return dropDownState[id]!!
     }
 
     fun setRadioInput(input: String) {
@@ -34,8 +50,6 @@ class InventoryFieldViewModel() : ViewModel() {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 if (Instance == null) {
-                    val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as AppolloRateApplication)
-                    val inventoryFieldRepository = application.container.inventoryFieldRepository
                     Instance = InventoryFieldViewModel()
                 }
                 Instance!!

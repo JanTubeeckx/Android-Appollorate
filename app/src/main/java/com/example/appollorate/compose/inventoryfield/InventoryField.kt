@@ -21,12 +21,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.appollorate.R
 import com.example.appollorate.data.model.InventoryField
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,22 +47,22 @@ fun InventoryField(
         }
         "select" ->
             ExposedDropdownMenuBox(
-                expanded = inventoryFieldState.showDropDown,
-                onExpandedChange = { inventoryFieldViewModel.showDropDown() },
+                expanded = inventoryFieldState.showDropDown[inventoryField.id] ?: false,
+                onExpandedChange = { inventoryFieldViewModel.showDropDown(inventoryField.id) },
             ) {
                 OutlinedTextField(
-                    value = "test",
+                    value = inventoryFieldState.dropDownValue[inventoryField.id] ?: "",
                     onValueChange = {},
                     readOnly = true,
-                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = inventoryFieldState.showDropDown) },
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = inventoryFieldState.showDropDown[inventoryField.id] ?: false) },
                     modifier = Modifier
                         .menuAnchor()
                         .fillMaxWidth(),
-                    label = { Text(stringResource(R.string.APP_NAME)) },
+                    label = { Text(inventoryField.description) },
                 )
                 ExposedDropdownMenu(
-                    expanded = inventoryFieldState.showDropDown,
-                    onDismissRequest = { inventoryFieldViewModel.showDropDown() },
+                    expanded = inventoryFieldState.showDropDown[inventoryField.id] ?: false,
+                    onDismissRequest = { inventoryFieldViewModel.showDropDown(inventoryField.id) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(color = MaterialTheme.colorScheme.onPrimary),
@@ -78,10 +76,8 @@ fun InventoryField(
                                 )
                             },
                             onClick = {
-                                /*selectedFormula = formula
-                                reservation?.formula = formula
-                                reservationDetailViewModel.setReservation(reservation!!)
-                                reservationDetailViewModel.dismissDropDown()*/
+                                inventoryFieldViewModel.setInput(inventoryField.id, dropdownValue.description)
+                                inventoryFieldViewModel.hideDropDown(inventoryField.id, dropdownValue.description)
                             },
                             modifier = Modifier.fillMaxWidth(),
                         )
