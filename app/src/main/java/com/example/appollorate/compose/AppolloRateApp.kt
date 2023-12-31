@@ -76,6 +76,8 @@ fun AppolloRateApp(
                 NavComponent(
                     navController = navController,
                     modifier = Modifier.padding(innerPadding),
+                    goToStartScreen = goToStartScreen,
+
                 )
             }
         }
@@ -105,6 +107,7 @@ fun AppolloRateApp(
             NavComponent(
                 navController = navController,
                 modifier = Modifier.padding(innerPadding),
+                goToStartScreen = goToStartScreen,
             )
         }
     } else {
@@ -129,6 +132,7 @@ fun AppolloRateApp(
                 NavComponent(
                     navController = navController,
                     modifier = Modifier.padding(innerPadding),
+                    goToStartScreen = goToStartScreen,
                 )
             }
         }

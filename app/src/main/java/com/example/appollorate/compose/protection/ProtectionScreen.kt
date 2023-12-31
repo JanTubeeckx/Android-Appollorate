@@ -29,6 +29,7 @@ import com.example.appollorate.compose.inventoryfield.InventoryField
 @Composable
 fun ProtectionScreen(
     protectionScreenViewModel: ProtectionScreenViewModel = viewModel(factory = ProtectionScreenViewModel.Factory),
+    goToStartScreen: () -> Unit,
 ) {
     val inventoryFieldListState by protectionScreenViewModel.uiState.collectAsState()
     val lazyListState = rememberLazyListState()
@@ -49,7 +50,7 @@ fun ProtectionScreen(
         }
         Spacer(modifier = Modifier.height(8.dp))
         ElevatedButton(
-            onClick = { /*TODO*/ },
+            onClick = { goToStartScreen() },
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primary,
             ),

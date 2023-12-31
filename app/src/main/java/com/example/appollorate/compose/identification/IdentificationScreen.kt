@@ -29,18 +29,17 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.appollorate.R
 import com.example.appollorate.compose.inventoryfield.InventoryField
-import com.example.appollorate.ui.theme.AppollorateTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun IdentificationScreen(
     inventoryScreenViewModel: IdentificationScreenViewModel = viewModel(factory = IdentificationScreenViewModel.Factory),
+    goToStartScreen: () -> Unit,
 ) {
     val inventoryFieldListState by inventoryScreenViewModel.uiState.collectAsState()
     val lazyListState = rememberLazyListState()
@@ -92,7 +91,7 @@ fun IdentificationScreen(
         }
         Spacer(modifier = Modifier.height(24.dp))
         ElevatedButton(
-            onClick = { /*TODO*/ },
+            onClick = { goToStartScreen() },
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.primary,
             ),
@@ -100,13 +99,5 @@ fun IdentificationScreen(
         ) {
             Text(text = stringResource(R.string.NEXT))
         }
-    }
-}
-
-@Preview
-@Composable
-fun IdentificationScreenPreview() {
-    AppollorateTheme {
-        IdentificationScreen()
     }
 }

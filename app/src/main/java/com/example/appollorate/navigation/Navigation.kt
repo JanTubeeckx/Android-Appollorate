@@ -16,6 +16,7 @@ import com.example.appollorate.compose.protection.ProtectionScreen
 fun NavComponent(
     navController: NavHostController,
     modifier: Modifier = Modifier,
+    goToStartScreen: () -> Unit,
 ) {
     NavHost(
         navController = navController,
@@ -23,7 +24,7 @@ fun NavComponent(
         modifier = modifier,
     ) {
         composable(route = NavigationOverview.Start.name) {
-            HomeScreen(goToStartScreen = { navController.navigate(NavigationOverview.StartScreen.name) }, goToInventories = {})
+            HomeScreen(goToStartScreen = goToStartScreen, goToInventories = {})
         }
         composable(route = NavigationOverview.StartScreen.name) {
             StartScreen(navController = navController)
@@ -34,7 +35,7 @@ fun NavComponent(
                 navArgument("stepId") { type = NavType.StringType },
             ),
         ) {
-            IdentificationScreen()
+            IdentificationScreen(goToStartScreen = goToStartScreen)
         }
         composable(
             "Protection/{stepId}",
@@ -42,7 +43,7 @@ fun NavComponent(
                 navArgument("stepId") { type = NavType.StringType },
             ),
         ) {
-            ProtectionScreen()
+            ProtectionScreen(goToStartScreen = goToStartScreen)
         }
     }
 }
