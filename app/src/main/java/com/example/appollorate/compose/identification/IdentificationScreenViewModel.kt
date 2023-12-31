@@ -1,7 +1,6 @@
-package com.example.appollorate.compose.inventory
+package com.example.appollorate.compose.identification
 
 import android.util.Log
-import androidx.compose.ui.text.toLowerCase
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -20,13 +19,13 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.io.IOException
 
-class InventoryScreenViewModel(
+class IdentificationScreenViewModel(
     private val inventoryFieldRepository: InventoryFieldRepository,
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(InventoryScreenState())
-    var uiState: StateFlow<InventoryScreenState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(IdentificationScreenState())
+    var uiState: StateFlow<IdentificationScreenState> = _uiState.asStateFlow()
 
     private val stepId = savedStateHandle.get<String>("stepId")!!
 
@@ -36,15 +35,15 @@ class InventoryScreenViewModel(
 
     fun getRepoInventoryFields(stepId: String) {
         try {
-            viewModelScope.launch { inventoryFieldRepository.refresh(stepId.toLowerCase()) }
+            viewModelScope.launch { inventoryFieldRepository.refresh(stepId.lowercase()) }
 
             uiState = inventoryFieldRepository.getInventoryFieldsByInventoryStepId(
-                stepId.toLowerCase(),
-            ).map { InventoryScreenState(it) }
+                stepId.lowercase(),
+            ).map { IdentificationScreenState(it) }
                 .stateIn(
                     scope = viewModelScope,
                     started = SharingStarted.WhileSubscribed(5_000L),
-                    initialValue = InventoryScreenState(),
+                    initialValue = IdentificationScreenState(),
                 )
         } catch (e: IOException) {
             Log.e("Error", "$e")
@@ -52,14 +51,14 @@ class InventoryScreenViewModel(
     }
 
     companion object {
-        private var Instance: InventoryScreenViewModel? = null
+        private var Instance: IdentificationScreenViewModel? = null
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 if (Instance == null) {
                     val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as AppolloRateApplication)
                     val inventoryFieldRepository = application.container.inventoryFieldRepository
                     val savedStateHandle = createSavedStateHandle()
-                    Instance = InventoryScreenViewModel(inventoryFieldRepository = inventoryFieldRepository, savedStateHandle = savedStateHandle)
+                    Instance = IdentificationScreenViewModel(inventoryFieldRepository = inventoryFieldRepository, savedStateHandle = savedStateHandle)
                 }
                 Instance!!
             }

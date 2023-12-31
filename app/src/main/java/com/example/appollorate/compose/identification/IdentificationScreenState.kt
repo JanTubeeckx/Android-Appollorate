@@ -1,7 +1,7 @@
-package com.example.appollorate.compose.inventory
+package com.example.appollorate.compose.identification
 
 import com.example.appollorate.data.model.InventoryField
 
-data class InventoryScreenState(
+data class IdentificationScreenState(
     val inventoryFieldList: List<InventoryField> = mutableListOf(),
 )

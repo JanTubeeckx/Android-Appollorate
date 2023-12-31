@@ -8,7 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.appollorate.compose.home.HomeScreen
-import com.example.appollorate.compose.inventory.InventoryScreen
+import com.example.appollorate.compose.identification.IdentificationScreen
 import com.example.appollorate.compose.menu.StartScreen
 import com.example.appollorate.compose.protection.ProtectionScreen
 
@@ -34,7 +34,7 @@ fun NavComponent(
                 navArgument("stepId") { type = NavType.StringType },
             ),
         ) {
-            InventoryScreen()
+            IdentificationScreen()
         }
         composable(
             "Protection/{stepId}",
