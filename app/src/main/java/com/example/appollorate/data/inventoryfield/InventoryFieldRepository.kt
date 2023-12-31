@@ -38,9 +38,9 @@ class CachingInventoryFieldRepository(
 
     override suspend fun refresh(stepId: String) {
         try {
-            Log.i("TestStepId", "$stepId")
             inventoryFieldApiService.getInventoryFieldsAsFlow(stepId).asDomainObjects().collect() {
                     value ->
+                Log.i("TestRefresh", "$value")
                 for (inventoryField in value) {
                     insertInventoryField(inventoryField)
                 }

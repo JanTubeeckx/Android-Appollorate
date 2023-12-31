@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
@@ -68,20 +69,26 @@ fun InventoryField(
                         .fillMaxWidth()
                         .background(color = MaterialTheme.colorScheme.onPrimary),
                 ) {
-/*                    formulas.forEach { formula ->
+                    inventoryField.dropDownValues?.forEach { dropdownValue ->
                         DropdownMenuItem(
-                            text = { Text(formula.name) },
+                            text = {
+                                Text(
+                                    text = dropdownValue.description,
+                                    modifier = Modifier.fillMaxWidth(),
+                                )
+                            },
                             onClick = {
-                                selectedFormula = formula
+                                /*selectedFormula = formula
                                 reservation?.formula = formula
                                 reservationDetailViewModel.setReservation(reservation!!)
-                                reservationDetailViewModel.dismissDropDown()
+                                reservationDetailViewModel.dismissDropDown()*/
                             },
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
                         )
-                    }*/
+                    }
                 }
             }
+
         "number" -> TextField(value = "test", onValueChange = {})
         "radio" -> {
             Column(

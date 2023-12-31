@@ -5,6 +5,7 @@ data class InventoryField(
     var description: String,
     var type: String,
     var inventoryStep_id: String?,
-    var dropdownField_id: String?,
+    var dropDownField_id: String?,
     var hasDamage: Boolean?,
+    var dropDownValues: List<DropDownValue>? = emptyList(),
 )

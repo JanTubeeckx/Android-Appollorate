@@ -9,7 +9,7 @@ import com.example.appollorate.data.inventoryfield.InventoryFieldDao
 import com.example.appollorate.data.inventorystep.DbInventoryStep
 import com.example.appollorate.data.inventorystep.InventoryStepDao
 
-@Database(entities = [DbInventoryField::class, DbInventoryStep::class], version = 4, exportSchema = false)
+@Database(entities = [DbInventoryField::class, DbInventoryStep::class], version = 13, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun inventoryFieldDao(): InventoryFieldDao
