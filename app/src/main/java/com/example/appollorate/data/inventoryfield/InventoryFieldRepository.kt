@@ -14,13 +14,14 @@ interface InventoryFieldRepository {
     fun getInventoryFieldsByInventoryStepId(stepId: String): Flow<List<InventoryField>>
 
     suspend fun insertInventoryField(inventoryField: InventoryField)
-    suspend fun refresh()
+    suspend fun refresh(stepId: String)
 }
 
 class CachingInventoryFieldRepository(
     private val inventoryFieldDao: InventoryFieldDao,
     private val inventoryFieldApiService: InventoryFieldApiService,
 ) : InventoryFieldRepository {
+
     override fun getInventoryFieldsByInventoryStepId(stepId: String): Flow<List<InventoryField>> {
         return inventoryFieldDao.getIdentificationInventoryFieldsByInventoryStepId(stepId).map {
             it.asDomainInventoryFields()
@@ -35,14 +36,15 @@ class CachingInventoryFieldRepository(
         inventoryFieldDao.insert(inventoryField.asDbInventoryField())
     }
 
-    override suspend fun refresh() {
+    override suspend fun refresh(stepId: String) {
         try {
-            inventoryFieldApiService.getInventoryFieldsAsFlow().asDomainObjects().collect() {
+            Log.i("TestStepId", "$stepId")
+            inventoryFieldApiService.getInventoryFieldsAsFlow(stepId).asDomainObjects().collect() {
                     value ->
                 for (inventoryField in value) {
                     insertInventoryField(inventoryField)
                 }
-                getInventoryFieldsByInventoryStepId(stepId = "7f28c5f9-d711-4cd6-ac15-d13d71abaa01")
+                getInventoryFieldsByInventoryStepId(stepId)
             }
         } catch (e: SocketTimeoutException) {
             Log.e("Error", "$e")

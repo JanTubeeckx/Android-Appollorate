@@ -1,4 +1,4 @@
-package com.example.appollorate.compose.identification
+package com.example.appollorate.compose.inventory
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -39,10 +39,10 @@ import com.example.appollorate.ui.theme.AppollorateTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun IdentificationScreen(
-    identificationScreenViewmodel: IdentificationScreenViewModel = viewModel(factory = IdentificationScreenViewModel.Factory),
+fun InventoryScreen(
+    inventoryScreenViewModel: InventoryScreenViewModel = viewModel(factory = InventoryScreenViewModel.Factory),
 ) {
-    val inventoryFieldListState by identificationScreenViewmodel.uiState.collectAsState()
+    val inventoryFieldListState by inventoryScreenViewModel.uiState.collectAsState()
     val lazyListState = rememberLazyListState()
 
     Column(
@@ -54,7 +54,7 @@ fun IdentificationScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth().padding(16.dp),
         ) {
-            items(inventoryFieldListState.identificationInventoryFieldList, key = { i -> i.id }) {
+            items(inventoryFieldListState.inventoryFieldList, key = { i -> i.id }) {
                 InventoryField(inventoryField = it)
             }
         }
@@ -105,6 +105,6 @@ fun IdentificationScreen(
 @Composable
 fun IdentificationScreenPreview() {
     AppollorateTheme {
-        IdentificationScreen()
+        InventoryScreen()
     }
 }

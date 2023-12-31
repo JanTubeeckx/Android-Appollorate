@@ -1,8 +1,10 @@
-package com.example.appollorate.compose.identification
+package com.example.appollorate.compose.protection
 
 import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
@@ -17,12 +19,15 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.io.IOException
 
-class IdentificationScreenViewModel(
+class ProtectionScreenViewModel(
     private val inventoryFieldRepository: InventoryFieldRepository,
+    private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(IdentificationScreenState())
-    var uiState: StateFlow<IdentificationScreenState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(ProtectionScreenState())
+    var uiState: StateFlow<ProtectionScreenState> = _uiState.asStateFlow()
+
+    private val stepId = savedStateHandle.get<String>("stepId")!!
 
     init {
         getRepoInventoryFields()
@@ -30,15 +35,15 @@ class IdentificationScreenViewModel(
 
     fun getRepoInventoryFields() {
         try {
-            viewModelScope.launch { inventoryFieldRepository.refresh() }
+            viewModelScope.launch { inventoryFieldRepository.refresh(stepId.toLowerCase()) }
 
             uiState = inventoryFieldRepository.getInventoryFieldsByInventoryStepId(
-                "7f28c5f9-d711-4cd6-ac15-d13d71abaa01",
-            ).map { IdentificationScreenState(it) }
+                stepId.toLowerCase(),
+            ).map { ProtectionScreenState(it) }
                 .stateIn(
                     scope = viewModelScope,
                     started = SharingStarted.WhileSubscribed(5_000L),
-                    initialValue = IdentificationScreenState(),
+                    initialValue = ProtectionScreenState(),
                 )
         } catch (e: IOException) {
             Log.e("Error", "$e")
@@ -46,13 +51,18 @@ class IdentificationScreenViewModel(
     }
 
     companion object {
-        private var Instance: IdentificationScreenViewModel? = null
+        private var Instance: ProtectionScreenViewModel? = null
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 if (Instance == null) {
-                    val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as AppolloRateApplication)
+                    val application =
+                        (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as AppolloRateApplication)
                     val inventoryFieldRepository = application.container.inventoryFieldRepository
-                    Instance = IdentificationScreenViewModel(inventoryFieldRepository = inventoryFieldRepository)
+                    val savedStateHandle = createSavedStateHandle()
+                    Instance = ProtectionScreenViewModel(
+                        inventoryFieldRepository = inventoryFieldRepository,
+                        savedStateHandle = savedStateHandle,
+                    )
                 }
                 Instance!!
             }

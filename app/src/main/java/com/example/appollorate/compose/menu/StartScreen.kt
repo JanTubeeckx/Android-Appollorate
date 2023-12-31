@@ -25,25 +25,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.appollorate.R
-import com.example.appollorate.ui.theme.AppollorateTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StartScreen(
     startScreenViewModel: StartScreenViewModel = viewModel(factory = StartScreenViewModel.Factory),
-    goToIdentification: () -> Unit,
+    navController: NavController,
 ) {
     val startScreenState by startScreenViewModel.uiState.collectAsState()
     val lazyListState = rememberLazyListState()
 
-    println(startScreenState.identificationInventorySteps)
+    val IDENTIFICATION = stringResource(R.string.IDENTIFICATION)
+    val PROTECTION = stringResource(R.string.PROTECTION)
 
     LazyColumn(
         state = lazyListState,
@@ -53,9 +54,13 @@ fun StartScreen(
             .padding(20.dp),
     ) {
         items(startScreenState.identificationInventorySteps, key = { s -> s.id }) {
-            val icon = it.icon
             ElevatedCard(
-                onClick = goToIdentification,
+                onClick = {
+                    when (it.description) {
+                        IDENTIFICATION -> navController.navigate("Inventory/${it.id}")
+                        PROTECTION -> navController.navigate("Protection/${it.id}")
+                    }
+                },
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.onPrimary,
                     contentColor = MaterialTheme.colorScheme.surfaceTint,
@@ -102,13 +107,5 @@ fun StartScreen(
             }
             Spacer(modifier = Modifier.height(14.dp))
         }
-    }
-}
-
-@Preview
-@Composable
-fun StartScreenPreview() {
-    AppollorateTheme {
-        StartScreen(goToIdentification = {})
     }
 }

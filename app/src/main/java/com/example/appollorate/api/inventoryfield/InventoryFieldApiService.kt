@@ -10,8 +10,8 @@ interface InventoryFieldApiService {
     suspend fun getInventoryFieldsByInventoryStepId(@Path("stepId") stepId: String): List<ApiInventoryField>
 }
 
-fun InventoryFieldApiService.getInventoryFieldsAsFlow(): Flow<List<ApiInventoryField>> = flow {
+fun InventoryFieldApiService.getInventoryFieldsAsFlow(stepId: String): Flow<List<ApiInventoryField>> = flow {
     emit(
-        getInventoryFieldsByInventoryStepId(stepId = "7f28c5f9-d711-4cd6-ac15-d13d71abaa01"),
+        getInventoryFieldsByInventoryStepId(stepId = stepId),
     )
 }

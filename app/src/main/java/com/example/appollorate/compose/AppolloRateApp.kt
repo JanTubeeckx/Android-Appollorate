@@ -42,11 +42,11 @@ fun AppolloRateApp(
 
     val goToHome: () -> Unit = { navController.popBackStack(NavigationOverview.Start.name, inclusive = false) }
     val goToStartScreen = { navController.navigate(NavigationOverview.StartScreen.name) { launchSingleTop = true } }
-    val goToIdentification = { navController.navigate(NavigationOverview.Identification.name) { launchSingleTop = true } }
+    val goToIdentification = { navController.navigate(NavigationOverview.Inventory.name) { launchSingleTop = true } }
     val goToReservations = { navController.navigate(NavigationOverview.Inventories.name) { launchSingleTop = true } }
 
     val currentScreenTitle = NavigationOverview.valueOf(
-        backStackEntry?.destination?.route ?: NavigationOverview.Start.name,
+        backStackEntry?.destination?.route?.substringBefore("/") ?: NavigationOverview.Start.name,
     ).title
 
     if (navigationType == AppolloRateNavigationType.PERMANENT_NAVIGATION_DRAWER) {
