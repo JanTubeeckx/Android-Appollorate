@@ -13,8 +13,23 @@ interface InventoryStepApiService {
 
     @GET("/api/inventorysteps/loose")
     suspend fun getDamageInventoryStepsLoose(): List<ApiInventoryStep>
+
+    @GET("/api/inventorysteps/formchars")
+    suspend fun getFormCharInventorySteps(): List<ApiInventoryStep>
 }
 
 fun InventoryStepApiService.getIdentificationInventoryStepsAsFlow(): Flow<List<ApiInventoryStep>> = flow {
     emit(getIdentificationInventorySteps())
+}
+
+fun InventoryStepApiService.getDamageInventoryStepsBoundAsFlow(): Flow<List<ApiInventoryStep>> = flow {
+    emit(getDamageInventoryStepsBound())
+}
+
+fun InventoryStepApiService.getDamageInventoryStepsLooseAsFlow(): Flow<List<ApiInventoryStep>> = flow {
+    emit(getDamageInventoryStepsLoose())
+}
+
+fun InventoryStepApiService.getFormCharInventoryStepsAsFlow(): Flow<List<ApiInventoryStep>> = flow {
+    emit(getFormCharInventorySteps())
 }

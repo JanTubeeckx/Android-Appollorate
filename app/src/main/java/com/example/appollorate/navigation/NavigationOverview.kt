@@ -16,6 +16,6 @@ enum class NavigationOverview(@StringRes val title: Int, val icon: ImageVector) 
     StartScreen(title = R.string.DAMAGE_REGISTRATION, icon = Icons.Filled.Assignment),
     Inventory(title = R.string.IDENTIFICATION, icon = Icons.Filled.AccountBox),
     Protection(title = R.string.PROTECTION, icon = Icons.Filled.Inbox),
-    Damage(title = R.string.SHAPE_AND_DAMAGE, icon = Icons.Filled.FileOpen),
+    ShapeAndDamage(title = R.string.SHAPE_AND_DAMAGE, icon = Icons.Filled.FileOpen),
     Inventories(title = R.string.INVENTORIES, icon = Icons.Filled.List),
 }

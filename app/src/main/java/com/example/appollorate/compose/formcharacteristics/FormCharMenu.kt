@@ -1,7 +1,7 @@
-package com.example.appollorate.compose.menu
+package com.example.appollorate.compose.formcharacteristics
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -33,22 +33,20 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.appollorate.R
-import com.example.appollorate.navigation.NavigationOverview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun StartScreen(
-    startScreenViewModel: StartScreenViewModel = viewModel(factory = StartScreenViewModel.Factory),
+fun FormCharMenu(
+    formCharMenuViewModel: FormCharMenuViewModel = viewModel(factory = FormCharMenuViewModel.Factory),
     navController: NavController,
 ) {
-    val startScreenState by startScreenViewModel.uiState.collectAsState()
+    val formCharMenuState by formCharMenuViewModel.uiState.collectAsState()
     val lazyListState = rememberLazyListState()
 
-    val IDENTIFICATION = stringResource(R.string.IDENTIFICATION)
-    val PROTECTION = stringResource(R.string.PROTECTION)
-    val SHAPE_AND_DAMAGE = stringResource(R.string.SHAPE_AND_DAMAGE)
-    val IDENTIFICATION_ICON = stringResource(R.string.IDENTIFICATION_ICON)
-    val PROTECTION_ICON = stringResource(R.string.PROTECTION_ICON)
+    val BOOK_ICON = stringResource(R.string.BOOK)
+    val CONSTRUCTION_ICON = stringResource(R.string.CONSTRUCTION)
+    val SIMPLE_BINDING = stringResource(R.string.SIMPLE_BINDING)
+    val CARRIER_MATERIAL = stringResource(R.string.CARRIER_MATERIAL)
 
     LazyColumn(
         state = lazyListState,
@@ -57,13 +55,12 @@ fun StartScreen(
             .fillMaxWidth()
             .padding(20.dp),
     ) {
-        items(startScreenState.identificationInventorySteps, key = { s -> s.id }) {
+        items(formCharMenuState.FormAndDamageInventorySteps, key = { s -> s.id }) {
             ElevatedCard(
                 onClick = {
                     when (it.description) {
-                        IDENTIFICATION -> navController.navigate("Inventory/${it.id}")
-                        PROTECTION -> navController.navigate("Protection/${it.id}")
-                        SHAPE_AND_DAMAGE -> navController.navigate(NavigationOverview.ShapeAndDamage.name)
+                       /* IDENTIFICATION -> navController.navigate("Inventory/${it.id}")
+                        PROTECTION -> navController.navigate("Protection/${it.id}")*/
                     }
                 },
                 colors = CardDefaults.cardColors(
@@ -75,35 +72,35 @@ fun StartScreen(
                 ),
                 shape = RoundedCornerShape(dimensionResource(R.dimen.card_corner_radius)),
                 modifier = Modifier
-                    .size(width = 370.dp, height = 155.dp),
+                    .size(width = 370.dp, height = 113.dp),
             ) {
-                Column(
-                    verticalArrangement = Arrangement.Center,
+                Row(
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .fillMaxHeight()
                         .padding(16.dp),
                 ) {
                     Icon(
                         painter = painterResource(
-                            id =
-                            when (it.icon) {
-                                IDENTIFICATION_ICON -> R.drawable.address_card
-                                PROTECTION_ICON -> R.drawable.box
-                                else -> R.drawable.file_pen
+                            id = when (it.icon) {
+                                BOOK_ICON -> R.drawable.book
+                                CONSTRUCTION_ICON -> R.drawable.screwdriver_wrench
+                                SIMPLE_BINDING -> R.drawable.paperclip
+                                else -> R.drawable.layer_group
                             },
                         ),
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .size(53.dp),
+                            .size(40.dp),
                     )
                     Text(
                         text = it.description,
-                        fontSize = 30.sp,
+                        fontSize = 26.sp,
                         fontWeight = FontWeight.SemiBold,
                         color = MaterialTheme.colorScheme.primary,
-                        textAlign = TextAlign.Center,
+                        textAlign = TextAlign.Start,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(16.dp),

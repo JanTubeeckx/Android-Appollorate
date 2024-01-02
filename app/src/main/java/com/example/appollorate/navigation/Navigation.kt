@@ -7,6 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.appollorate.compose.formcharacteristics.FormCharMenu
 import com.example.appollorate.compose.home.HomeScreen
 import com.example.appollorate.compose.identification.IdentificationScreen
 import com.example.appollorate.compose.menu.StartScreen
@@ -44,6 +45,9 @@ fun NavComponent(
             ),
         ) {
             ProtectionScreen(goToStartScreen = goToStartScreen)
+        }
+        composable(route = NavigationOverview.ShapeAndDamage.name) {
+            FormCharMenu(navController = navController)
         }
     }
 }

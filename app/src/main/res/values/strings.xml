@@ -8,4 +8,10 @@
     <string name="SHAPE_AND_DAMAGE">Vorm en schade</string>
     <string name="navigation_rail">Navigate between items here</string>
     <string name="NEXT">Volgende</string>
+    <string name="IDENTIFICATION_ICON">address-card</string>
+    <string name="PROTECTION_ICON">box</string>
+    <string name="BOOK">book</string>
+    <string name="CONSTRUCTION">screwdriver-wrench</string>
+    <string name="SIMPLE_BINDING">paperclip</string>
+    <string name="CARRIER_MATERIAL">layer-group</string>
 </resources>

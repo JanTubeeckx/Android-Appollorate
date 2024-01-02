@@ -11,7 +11,7 @@ interface InventoryStepDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(inventoryStep: DbInventoryStep)
 
-    @Query("SELECT * FROM inventory_steps WHERE isDamage = 0")
+    @Query("SELECT * FROM inventory_steps WHERE isDamage = 0 AND isBound = 0")
     fun getIdentificationInventorySteps(): Flow<List<DbInventoryStep>>
 
     @Query("SELECT * FROM inventory_steps WHERE isDamage = 1 AND isBound = 1")
@@ -19,4 +19,7 @@ interface InventoryStepDao {
 
     @Query("SELECT * FROM inventory_steps WHERE isDamage = 1 AND isBound = 0")
     fun getDamageInventoryStepsLoose(): Flow<List<DbInventoryStep>>
+
+    @Query("SELECT * FROM inventory_steps WHERE isDamage = 0 AND inventoryStepId = null")
+    fun getFormCharInventorySteps(): Flow<List<DbInventoryStep>>
 }
