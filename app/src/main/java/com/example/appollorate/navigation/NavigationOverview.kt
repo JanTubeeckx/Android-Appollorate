@@ -18,5 +18,6 @@ enum class NavigationOverview(@StringRes val title: Int, val icon: ImageVector) 
     Protection(title = R.string.PROTECTION, icon = Icons.Filled.Inbox),
     ShapeAndDamage(title = R.string.SHAPE_AND_DAMAGE, icon = Icons.Filled.FileOpen),
     Cover(title = R.string.COVER, icon = Icons.Filled.FileOpen),
+    CoverMaterial(title = R.string.COVER_MATERIAL, icon = Icons.Filled.FileOpen),
     Inventories(title = R.string.INVENTORIES, icon = Icons.Filled.List),
 }

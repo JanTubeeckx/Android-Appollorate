@@ -23,7 +23,7 @@ class CachingInventoryFieldRepository(
 ) : InventoryFieldRepository {
 
     override fun getInventoryFieldsByInventoryStepId(stepId: String): Flow<List<InventoryField>> {
-        return inventoryFieldDao.getIdentificationInventoryFieldsByInventoryStepId(stepId).map {
+        return inventoryFieldDao.getInventoryFieldsByInventoryStepId(stepId).map {
             it.asDomainInventoryFields()
         }.onEach {
           /*  if (it.isEmpty()) {

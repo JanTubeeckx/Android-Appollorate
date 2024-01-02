@@ -15,7 +15,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -45,7 +44,7 @@ fun InventoryField(
             )
             Spacer(modifier = Modifier.height(16.dp))
         }
-        "select" ->
+        "select" -> {
             ExposedDropdownMenuBox(
                 expanded = inventoryFieldState.showDropDown[inventoryField.id] ?: false,
                 onExpandedChange = { inventoryFieldViewModel.showDropDown(inventoryField.id) },
@@ -84,8 +83,17 @@ fun InventoryField(
                     }
                 }
             }
-
-        "number" -> TextField(value = "test", onValueChange = {})
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+        "number" -> {
+            OutlinedTextField(
+                value = inventoryFieldState.input[inventoryField.id] ?: "",
+                onValueChange = { inventoryFieldViewModel.setInput(inventoryField.id, it) },
+                modifier = Modifier.fillMaxWidth(),
+                label = { Text(text = inventoryField.description) },
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+        }
         "radio" -> {
             Column(
                 modifier = Modifier.fillMaxWidth(),

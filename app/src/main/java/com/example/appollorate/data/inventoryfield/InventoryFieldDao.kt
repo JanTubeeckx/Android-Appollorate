@@ -12,5 +12,5 @@ interface InventoryFieldDao {
     suspend fun insert(inventoryField: DbInventoryField)
 
     @Query("SELECT * FROM inventory_fields WHERE inventoryStep_id = :inventoryStepId")
-    fun getIdentificationInventoryFieldsByInventoryStepId(inventoryStepId: String): Flow<List<DbInventoryField>>
+    fun getInventoryFieldsByInventoryStepId(inventoryStepId: String): Flow<List<DbInventoryField>>
 }

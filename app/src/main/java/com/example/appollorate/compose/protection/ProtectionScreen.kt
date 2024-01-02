@@ -45,7 +45,6 @@ fun ProtectionScreen(
         ) {
             items(inventoryFieldListState.inventoryFieldList, key = { i -> i.id }) {
                 InventoryField(inventoryField = it)
-                Spacer(modifier = Modifier.height(16.dp))
             }
         }
         Spacer(modifier = Modifier.height(8.dp))

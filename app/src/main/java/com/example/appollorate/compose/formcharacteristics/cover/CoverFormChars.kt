@@ -21,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -39,6 +40,8 @@ fun CoverFormChars(
     val coverFormCharsState by coverFormCharsViewModel.uiState.collectAsState()
     val lazyListState = rememberLazyListState()
 
+    val COVER_MATERIAL = stringResource(R.string.COVER_MATERIAL)
+
     LazyColumn(
         state = lazyListState,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -51,7 +54,7 @@ fun CoverFormChars(
             ElevatedCard(
                 onClick = {
                     when (it.description) {
-                        // COVER -> navController.navigate("Cover/${it.id}")
+                        COVER_MATERIAL -> navController.navigate("CoverMaterial/${it.id}")
                         // PROTECTION -> navController.navigate("Protection/${it.id}")
                     }
                 },

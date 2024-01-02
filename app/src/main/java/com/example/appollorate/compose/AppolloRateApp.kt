@@ -14,6 +14,9 @@ import androidx.compose.material3.PermanentNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -49,6 +52,8 @@ fun AppolloRateApp(
         backStackEntry?.destination?.route?.substringBefore("/") ?: NavigationOverview.Start.name,
     ).title
 
+    var showCamera by remember { mutableStateOf(false) }
+
     if (navigationType == AppolloRateNavigationType.PERMANENT_NAVIGATION_DRAWER) {
         PermanentNavigationDrawer(drawerContent = {
             PermanentDrawerSheet(Modifier.width(160.dp)) {
@@ -77,7 +82,9 @@ fun AppolloRateApp(
                     navController = navController,
                     modifier = Modifier.padding(innerPadding),
                     goToStartScreen = goToStartScreen,
-
+                    navigateUp = navigateUp,
+                    showCamera = showCamera,
+                    openCamera = { showCamera = true },
                 )
             }
         }
@@ -108,6 +115,9 @@ fun AppolloRateApp(
                 navController = navController,
                 modifier = Modifier.padding(innerPadding),
                 goToStartScreen = goToStartScreen,
+                navigateUp = navigateUp,
+                showCamera = showCamera,
+                openCamera = { showCamera = true },
             )
         }
     } else {
@@ -133,6 +143,9 @@ fun AppolloRateApp(
                     navController = navController,
                     modifier = Modifier.padding(innerPadding),
                     goToStartScreen = goToStartScreen,
+                    navigateUp = navigateUp,
+                    showCamera = showCamera,
+                    openCamera = { showCamera = true },
                 )
             }
         }

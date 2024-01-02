@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.appollorate.compose.formcharacteristics.FormCharMenu
 import com.example.appollorate.compose.formcharacteristics.cover.CoverFormChars
+import com.example.appollorate.compose.formcharacteristics.cover.CoverMaterialScreen
 import com.example.appollorate.compose.home.HomeScreen
 import com.example.appollorate.compose.identification.IdentificationScreen
 import com.example.appollorate.compose.menu.StartScreen
@@ -19,6 +20,9 @@ fun NavComponent(
     navController: NavHostController,
     modifier: Modifier = Modifier,
     goToStartScreen: () -> Unit,
+    navigateUp: () -> Unit,
+    openCamera: () -> Unit,
+    showCamera: Boolean,
 ) {
     NavHost(
         navController = navController,
@@ -37,7 +41,7 @@ fun NavComponent(
                 navArgument("stepId") { type = NavType.StringType },
             ),
         ) {
-            IdentificationScreen(goToStartScreen = goToStartScreen)
+            IdentificationScreen(goToStartScreen = goToStartScreen, openCamera = openCamera, showCamera = showCamera)
         }
         composable(
             "Protection/{stepId}",
@@ -57,6 +61,14 @@ fun NavComponent(
             ),
         ) {
             CoverFormChars(navController = navController)
+        }
+        composable(
+            "CoverMaterial/{stepId}",
+            arguments = listOf(
+                navArgument("stepId") { type = NavType.StringType },
+            ),
+        ) {
+            CoverMaterialScreen(navigateUp = navigateUp)
         }
     }
 }

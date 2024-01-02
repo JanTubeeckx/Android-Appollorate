@@ -23,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
@@ -33,71 +34,78 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.appollorate.R
+import com.example.appollorate.compose.camera.CameraScreen
 import com.example.appollorate.compose.inventoryfield.InventoryField
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun IdentificationScreen(
-    inventoryScreenViewModel: IdentificationScreenViewModel = viewModel(factory = IdentificationScreenViewModel.Factory),
+    identificationScreenViewModel: IdentificationScreenViewModel = viewModel(factory = IdentificationScreenViewModel.Factory),
+    showCamera: Boolean,
+    openCamera: () -> Unit,
     goToStartScreen: () -> Unit,
 ) {
-    val inventoryFieldListState by inventoryScreenViewModel.uiState.collectAsState()
+    val inventoryFieldListState by identificationScreenViewModel.uiState.collectAsState()
     val lazyListState = rememberLazyListState()
 
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        LazyColumn(
-            state = lazyListState,
+    if (!showCamera) {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
         ) {
-            items(inventoryFieldListState.inventoryFieldList, key = { i -> i.id }) {
-                InventoryField(inventoryField = it)
-            }
-        }
-        ElevatedCard(
-            onClick = { /*TODO*/ },
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.onPrimary,
-            ),
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = dimensionResource(R.dimen.default_elevation),
-            ),
-            shape = RoundedCornerShape(dimensionResource(R.dimen.card_corner_radius)),
-            modifier = Modifier
-                .size(height = 95.dp, width = 375.dp),
-        ) {
-            Spacer(modifier = Modifier.height(16.dp))
-            Icon(
-                imageVector = Icons.Filled.CameraAlt,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
+            LazyColumn(
+                state = lazyListState,
+                horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .size(36.dp),
-            )
-            Text(
-                text = "Voeg een foto van het boek toe",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.primary,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth(),
-            )
+                    .padding(16.dp),
+            ) {
+                items(inventoryFieldListState.inventoryFieldList, key = { i -> i.id }) {
+                    InventoryField(inventoryField = it)
+                }
+            }
+            ElevatedCard(
+                onClick = { openCamera() },
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.onPrimary,
+                ),
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = dimensionResource(R.dimen.default_elevation),
+                ),
+                shape = RoundedCornerShape(dimensionResource(R.dimen.card_corner_radius)),
+                modifier = Modifier
+                    .size(height = 95.dp, width = 375.dp),
+            ) {
+                Spacer(modifier = Modifier.height(16.dp))
+                Icon(
+                    imageVector = Icons.Filled.CameraAlt,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .size(36.dp),
+                )
+                Text(
+                    text = "Voeg een foto van het boek toe",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.primary,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
+            Spacer(modifier = Modifier.height(24.dp))
+            ElevatedButton(
+                onClick = { goToStartScreen() },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                ),
+                shape = RoundedCornerShape(5.dp),
+            ) {
+                Text(text = stringResource(R.string.NEXT))
+            }
         }
-        Spacer(modifier = Modifier.height(24.dp))
-        ElevatedButton(
-            onClick = { goToStartScreen() },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.primary,
-            ),
-            shape = RoundedCornerShape(5.dp),
-        ) {
-            Text(text = stringResource(R.string.NEXT))
-        }
+    } else {
+        CameraScreen()
     }
 }

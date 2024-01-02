@@ -15,4 +15,5 @@
     <string name="SIMPLE_BINDING">paperclip</string>
     <string name="CARRIER_MATERIAL">layer-group</string>
     <string name="COVER">Band</string>
+    <string name="COVER_MATERIAL">Bandbekleding</string>
 </resources>
