@@ -22,6 +22,8 @@ fun NavComponent(
     goToStartScreen: () -> Unit,
     navigateUp: () -> Unit,
     openCamera: () -> Unit,
+    // onImageCaptured: (Uri) -> Unit,
+    closeCamera: () -> Unit,
     showCamera: Boolean,
 ) {
     NavHost(
@@ -41,7 +43,12 @@ fun NavComponent(
                 navArgument("stepId") { type = NavType.StringType },
             ),
         ) {
-            IdentificationScreen(goToStartScreen = goToStartScreen, openCamera = openCamera, showCamera = showCamera)
+            IdentificationScreen(
+                goToStartScreen = goToStartScreen,
+                openCamera = openCamera,
+                showCamera = showCamera,
+                closeCamera = closeCamera,
+            )
         }
         composable(
             "Protection/{stepId}",

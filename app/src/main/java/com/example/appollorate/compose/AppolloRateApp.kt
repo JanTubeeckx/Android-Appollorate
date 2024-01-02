@@ -85,6 +85,7 @@ fun AppolloRateApp(
                     navigateUp = navigateUp,
                     showCamera = showCamera,
                     openCamera = { showCamera = true },
+                    closeCamera = { showCamera = false },
                 )
             }
         }
@@ -118,6 +119,7 @@ fun AppolloRateApp(
                 navigateUp = navigateUp,
                 showCamera = showCamera,
                 openCamera = { showCamera = true },
+                closeCamera = { showCamera = false },
             )
         }
     } else {
@@ -146,6 +148,7 @@ fun AppolloRateApp(
                     navigateUp = navigateUp,
                     showCamera = showCamera,
                     openCamera = { showCamera = true },
+                    closeCamera = { showCamera = false },
                 )
             }
         }

@@ -1,17 +1,27 @@
 package com.example.appollorate.compose.identification
 
+import android.net.Uri
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CameraAlt
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedButton
@@ -23,6 +33,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,6 +45,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.rememberAsyncImagePainter
 import com.example.appollorate.R
 import com.example.appollorate.compose.camera.CameraScreen
 import com.example.appollorate.compose.inventoryfield.InventoryField
@@ -43,10 +56,18 @@ fun IdentificationScreen(
     identificationScreenViewModel: IdentificationScreenViewModel = viewModel(factory = IdentificationScreenViewModel.Factory),
     showCamera: Boolean,
     openCamera: () -> Unit,
+    closeCamera: () -> Unit,
     goToStartScreen: () -> Unit,
 ) {
     val inventoryFieldListState by identificationScreenViewModel.uiState.collectAsState()
     val lazyListState = rememberLazyListState()
+    var showImage by remember { mutableStateOf(false) }
+    var photoUri by remember { mutableStateOf(Uri.EMPTY) }
+
+    fun handleImageCaptured(uri: Uri) {
+        photoUri = uri
+        showImage = true
+    }
 
     if (!showCamera) {
         Column(
@@ -83,7 +104,7 @@ fun IdentificationScreen(
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .size(36.dp),
+                        .size(32.dp),
                 )
                 Text(
                     text = "Voeg een foto van het boek toe",
@@ -105,7 +126,52 @@ fun IdentificationScreen(
                 Text(text = stringResource(R.string.NEXT))
             }
         }
+    } else if (showCamera && !showImage) {
+        CameraScreen(onImageCaptured = ::handleImageCaptured)
     } else {
-        CameraScreen()
+        Image(
+            painter = rememberAsyncImagePainter("$photoUri"),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+        )
+        Row(
+            Modifier
+                .fillMaxHeight()
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.Top,
+            horizontalArrangement = Arrangement.End,
+        ) {
+            Button(
+                onClick = { closeCamera() },
+                contentPadding = PaddingValues(0.dp),
+                modifier = Modifier.width(40.dp),
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Close,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier
+                        .size(20.dp),
+                )
+            }
+        }
+        Row(
+            Modifier
+                .fillMaxHeight()
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.Bottom,
+            horizontalArrangement = Arrangement.Center,
+        ) {
+            Button(onClick = {
+                openCamera()
+                showImage = false
+            }, Modifier.padding(16.dp)) {
+                Text(
+                    text = "Maak nieuwe foto",
+                    fontSize = 18.sp,
+                )
+            }
+        }
     }
 }
