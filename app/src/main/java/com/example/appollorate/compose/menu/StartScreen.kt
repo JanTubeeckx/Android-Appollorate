@@ -61,7 +61,7 @@ fun StartScreen(
             ElevatedCard(
                 onClick = {
                     when (it.description) {
-                        IDENTIFICATION -> navController.navigate("Inventory/${it.id}")
+                        IDENTIFICATION -> navController.navigate("Identification/${it.id}")
                         PROTECTION -> navController.navigate("Protection/${it.id}")
                         SHAPE_AND_DAMAGE -> navController.navigate(NavigationOverview.ShapeAndDamage.name)
                     }

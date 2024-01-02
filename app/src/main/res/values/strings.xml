@@ -14,4 +14,5 @@
     <string name="CONSTRUCTION">screwdriver-wrench</string>
     <string name="SIMPLE_BINDING">paperclip</string>
     <string name="CARRIER_MATERIAL">layer-group</string>
+    <string name="COVER">Band</string>
 </resources>

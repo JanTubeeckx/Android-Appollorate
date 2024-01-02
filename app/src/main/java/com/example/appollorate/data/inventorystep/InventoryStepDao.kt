@@ -20,6 +20,6 @@ interface InventoryStepDao {
     @Query("SELECT * FROM inventory_steps WHERE isDamage = 1 AND isBound = 0")
     fun getDamageInventoryStepsLoose(): Flow<List<DbInventoryStep>>
 
-    @Query("SELECT * FROM inventory_steps WHERE isDamage = 0 AND inventoryStepId = null")
+    @Query("SELECT * FROM inventory_steps WHERE isDamage = 0 AND isBound = 1")
     fun getFormCharInventorySteps(): Flow<List<DbInventoryStep>>
 }

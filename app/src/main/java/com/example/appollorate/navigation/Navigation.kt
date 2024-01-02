@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.appollorate.compose.formcharacteristics.FormCharMenu
+import com.example.appollorate.compose.formcharacteristics.cover.CoverFormChars
 import com.example.appollorate.compose.home.HomeScreen
 import com.example.appollorate.compose.identification.IdentificationScreen
 import com.example.appollorate.compose.menu.StartScreen
@@ -31,7 +32,7 @@ fun NavComponent(
             StartScreen(navController = navController)
         }
         composable(
-            "Inventory/{stepId}",
+            "Identification/{stepId}",
             arguments = listOf(
                 navArgument("stepId") { type = NavType.StringType },
             ),
@@ -48,6 +49,14 @@ fun NavComponent(
         }
         composable(route = NavigationOverview.ShapeAndDamage.name) {
             FormCharMenu(navController = navController)
+        }
+        composable(
+            "Cover/{stepId}",
+            arguments = listOf(
+                navArgument("stepId") { type = NavType.StringType },
+            ),
+        ) {
+            CoverFormChars(navController = navController)
         }
     }
 }

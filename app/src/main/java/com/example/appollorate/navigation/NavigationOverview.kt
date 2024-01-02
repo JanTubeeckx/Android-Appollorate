@@ -14,8 +14,9 @@ import com.example.appollorate.R
 enum class NavigationOverview(@StringRes val title: Int, val icon: ImageVector) {
     Start(title = R.string.APP_NAME, icon = Icons.Filled.Home),
     StartScreen(title = R.string.DAMAGE_REGISTRATION, icon = Icons.Filled.Assignment),
-    Inventory(title = R.string.IDENTIFICATION, icon = Icons.Filled.AccountBox),
+    Identification(title = R.string.IDENTIFICATION, icon = Icons.Filled.AccountBox),
     Protection(title = R.string.PROTECTION, icon = Icons.Filled.Inbox),
     ShapeAndDamage(title = R.string.SHAPE_AND_DAMAGE, icon = Icons.Filled.FileOpen),
+    Cover(title = R.string.COVER, icon = Icons.Filled.FileOpen),
     Inventories(title = R.string.INVENTORIES, icon = Icons.Filled.List),
 }
