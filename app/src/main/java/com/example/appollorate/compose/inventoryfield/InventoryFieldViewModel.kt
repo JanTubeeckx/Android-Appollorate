@@ -35,14 +35,16 @@ class InventoryFieldViewModel() : ViewModel() {
         return dropDownState[id]!!
     }
 
-    fun setRadioInput(input: String) {
+    fun setRadioInput(id: String, input: String) {
         _uiState.update { it.copy(selectedRadioOption = input) }
+        _uiState.value.inventoryData[id] = input
     }
 
     fun setInput(id: String, input: String) {
         val inputValues = uiState.value.input.toMutableMap()
         inputValues[id] = input
         _uiState.update { it.copy(input = inputValues) }
+        _uiState.value.inventoryData[id] = input
     }
 
     companion object {

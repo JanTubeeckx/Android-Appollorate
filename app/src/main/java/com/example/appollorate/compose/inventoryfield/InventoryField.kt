@@ -111,7 +111,7 @@ fun InventoryField(
                         ) {
                             RadioButton(
                                 selected = (it == inventoryFieldState.selectedRadioOption),
-                                onClick = { inventoryFieldViewModel.setRadioInput(it) },
+                                onClick = { inventoryFieldViewModel.setRadioInput(inventoryField.id, it) },
                             )
                             Text(
                                 text = it,

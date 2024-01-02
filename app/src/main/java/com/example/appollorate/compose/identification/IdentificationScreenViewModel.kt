@@ -1,7 +1,6 @@
 package com.example.appollorate.compose.identification
 
 import android.util.Log
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -17,7 +16,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.IOException
 
@@ -49,14 +47,6 @@ class IdentificationScreenViewModel(
                 )
         } catch (e: IOException) {
             Log.e("Error", "$e")
-        }
-    }
-
-    fun openCamera() {
-        println("test")
-        _uiState.update {
-            println(it.openCamera)
-            it.copy(openCamera = !_uiState.value.openCamera)
         }
     }
 

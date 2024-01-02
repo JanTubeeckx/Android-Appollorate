@@ -104,7 +104,7 @@ fun IdentificationScreen(
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .size(32.dp),
+                        .size(36.dp),
                 )
                 Text(
                     text = "Voeg een foto van het boek toe",
@@ -152,7 +152,7 @@ fun IdentificationScreen(
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier
-                        .size(20.dp),
+                        .size(18.dp),
                 )
             }
         }

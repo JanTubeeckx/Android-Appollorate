@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -47,7 +46,6 @@ fun CameraScreen(
 ) {
     val context = LocalContext.current
     val permissionState = remember { cameraScreenViewModel.currentPermissionState }
-    val imageCapture = ImageCapture.Builder().build()
 
     cameraScreenViewModel.setPermissionState(
         ContextCompat.checkSelfPermission(
@@ -71,7 +69,7 @@ fun CameraScreen(
     )
 
     if (permissionState.value) {
-        cameraView(imageCapture = cameraScreenViewModel.imageCapture.value, onImageCaptured = onImageCaptured)
+        CameraView(imageCapture = cameraScreenViewModel.imageCapture.value, onImageCaptured = onImageCaptured)
     } else {
         LaunchedEffect(key1 = true) {
             resultLauncher.launch(cameraScreenViewModel.REQUIRED_PERMISSIONS)
@@ -80,10 +78,9 @@ fun CameraScreen(
 }
 
 @Composable
-fun cameraView(
+fun CameraView(
     imageCapture: ImageCapture,
     onImageCaptured: (Uri) -> Unit,
-    // closeCamera: () -> Unit,
 ) {
     val context = LocalContext.current
 
@@ -91,7 +88,7 @@ fun cameraView(
         onImageCaptured: (Uri) -> Unit,
     ) {
         // Get a stable reference of the modifiable image capture use case
-        val imageCapture = imageCapture ?: return
+        val imageCapture = imageCapture
 
         // Create time stamped name and MediaStore entry.
         val name = DateFormat.getDateTimeInstance()
@@ -103,7 +100,6 @@ fun cameraView(
                 put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/CameraX-Image")
             }
         }
-
         // Create output options object which contains file + metadata
         val outputOptions = ImageCapture.OutputFileOptions
             .Builder(
@@ -112,7 +108,6 @@ fun cameraView(
                 contentValues,
             )
             .build()
-
         // Set up image capture listener, which is triggered after photo has
         // been taken
         imageCapture.takePicture(
@@ -125,47 +120,49 @@ fun cameraView(
 
                 override fun
                 onImageSaved(output: ImageCapture.OutputFileResults) {
-                    val msg = "Photo capture succeeded: ${output.savedUri}"
+/*                    val msg = "Photo capture succeeded: ${output.savedUri}"
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-                    Log.d(ContentValues.TAG, msg)
+                    Log.d(ContentValues.TAG, msg)*/
                     onImageCaptured(output.savedUri!!)
                 }
             },
         )
     }
 
-    AndroidView({ context ->
-        val previewView = PreviewView(context).also {
-            it.scaleType = PreviewView.ScaleType.FILL_CENTER
-        }
-
-        val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
-        cameraProviderFuture.addListener({
-            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
-
-            val preview = Preview.Builder()
-                .build()
-                .also {
-                    it.setSurfaceProvider(previewView.surfaceProvider)
-                }
-
-            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-
-            try {
-                cameraProvider.unbindAll()
-                cameraProvider.bindToLifecycle(
-                    context as ComponentActivity,
-                    cameraSelector,
-                    preview,
-                    imageCapture,
-                )
-            } catch (ex: Exception) {
-                Log.e("Camera", "Use case binding failed", ex)
+    AndroidView(
+        { context ->
+            val previewView = PreviewView(context).also {
+                it.scaleType = PreviewView.ScaleType.FILL_CENTER
             }
-        }, ContextCompat.getMainExecutor(context))
-        previewView
-    }, modifier = Modifier.fillMaxHeight().fillMaxWidth())
 
+            val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
+            cameraProviderFuture.addListener({
+                val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+
+                val preview = Preview.Builder()
+                    .build()
+                    .also {
+                        it.setSurfaceProvider(previewView.surfaceProvider)
+                    }
+
+                val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+
+                try {
+                    cameraProvider.unbindAll()
+                    cameraProvider.bindToLifecycle(
+                        context as ComponentActivity,
+                        cameraSelector,
+                        preview,
+                        imageCapture,
+                    )
+                } catch (ex: Exception) {
+                    Log.e("Camera", "Use case binding failed", ex)
+                }
+            }, ContextCompat.getMainExecutor(context))
+            previewView
+        },
+        modifier = Modifier.fillMaxHeight().fillMaxWidth(),
+    )
     Row(
         Modifier.fillMaxHeight().fillMaxWidth(),
         verticalAlignment = Alignment.Bottom,
@@ -182,11 +179,3 @@ fun cameraView(
         }
     }
 }
-
-/*@androidx.compose.ui.tooling.preview.Preview
-@Composable
-private fun CameraScreenPreview() {
-    AppollorateTheme {
-        CameraScreen(closeCamera = {})
-    }
-}*/

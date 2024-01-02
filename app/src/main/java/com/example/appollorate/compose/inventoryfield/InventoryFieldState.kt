@@ -6,4 +6,5 @@ data class InventoryFieldState(
     val input: Map<String, String> = mutableMapOf(),
     val radioOptions: List<String> = listOf("Ja", "Neen"),
     val selectedRadioOption: String = radioOptions[0],
+    val inventoryData: MutableMap<String, String> = mutableMapOf(),
 )
