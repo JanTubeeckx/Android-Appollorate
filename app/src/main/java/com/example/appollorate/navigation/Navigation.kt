@@ -14,9 +14,11 @@ import com.example.appollorate.compose.home.HomeScreen
 import com.example.appollorate.compose.identification.IdentificationScreen
 import com.example.appollorate.compose.menu.StartScreen
 import com.example.appollorate.compose.protection.ProtectionScreen
+import com.example.appollorate.compose.utils.AppolloRateNavigationType
 
 @Composable
 fun NavComponent(
+    navigationType: AppolloRateNavigationType,
     navController: NavHostController,
     modifier: Modifier = Modifier,
     goToStartScreen: () -> Unit,
@@ -32,7 +34,7 @@ fun NavComponent(
         modifier = modifier,
     ) {
         composable(route = NavigationOverview.Start.name) {
-            HomeScreen(goToStartScreen = goToStartScreen, goToInventories = {})
+            HomeScreen(navigationType = navigationType, goToStartScreen = goToStartScreen, goToInventories = {})
         }
         composable(route = NavigationOverview.StartScreen.name) {
             StartScreen(navController = navController)

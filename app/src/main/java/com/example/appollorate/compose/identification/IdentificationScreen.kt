@@ -38,6 +38,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -59,7 +60,7 @@ fun IdentificationScreen(
     closeCamera: () -> Unit,
     goToStartScreen: () -> Unit,
 ) {
-    val inventoryFieldListState by identificationScreenViewModel.uiState.collectAsState()
+    val identificationScreenStateState by identificationScreenViewModel.uiState.collectAsState()
     val lazyListState = rememberLazyListState()
     var showImage by remember { mutableStateOf(false) }
     var photoUri by remember { mutableStateOf(Uri.EMPTY) }
@@ -81,7 +82,7 @@ fun IdentificationScreen(
                     .fillMaxWidth()
                     .padding(16.dp),
             ) {
-                items(inventoryFieldListState.inventoryFieldList, key = { i -> i.id }) {
+                items(identificationScreenStateState.inventoryFieldList, key = { i -> i.id }) {
                     InventoryField(inventoryField = it)
                 }
             }
@@ -132,6 +133,7 @@ fun IdentificationScreen(
         Image(
             painter = rememberAsyncImagePainter("$photoUri"),
             contentDescription = null,
+            contentScale = ContentScale.FillBounds,
             modifier = Modifier.fillMaxSize(),
         )
         Row(
@@ -152,7 +154,7 @@ fun IdentificationScreen(
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier
-                        .size(18.dp),
+                        .size(20.dp),
                 )
             }
         }

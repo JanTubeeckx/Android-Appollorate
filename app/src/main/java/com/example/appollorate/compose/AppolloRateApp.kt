@@ -63,13 +63,13 @@ fun AppolloRateApp(
                     modifier = Modifier
                         .wrapContentWidth()
                         .fillMaxHeight()
-                        .background(MaterialTheme.colorScheme.secondary)
+                        .background(MaterialTheme.colorScheme.primary)
                         .padding(8.dp),
                 )
             }
         }) {
             Scaffold(
-                containerColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                containerColor = MaterialTheme.colorScheme.onPrimary,
                 topBar = {
                     AppolloRateTopAppBar(
                         canNavigateBack = canNavigateBack,
@@ -79,6 +79,7 @@ fun AppolloRateApp(
                 },
             ) { innerPadding ->
                 NavComponent(
+                    navigationType = navigationType,
                     navController = navController,
                     modifier = Modifier.padding(innerPadding),
                     goToStartScreen = goToStartScreen,
@@ -113,6 +114,7 @@ fun AppolloRateApp(
             },
         ) { innerPadding ->
             NavComponent(
+                navigationType = navigationType,
                 navController = navController,
                 modifier = Modifier.padding(innerPadding),
                 goToStartScreen = goToStartScreen,
@@ -142,6 +144,7 @@ fun AppolloRateApp(
                 },
             ) { innerPadding ->
                 NavComponent(
+                    navigationType = navigationType,
                     navController = navController,
                     modifier = Modifier.padding(innerPadding),
                     goToStartScreen = goToStartScreen,

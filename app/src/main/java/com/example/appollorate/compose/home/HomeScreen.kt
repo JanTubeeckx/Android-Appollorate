@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -43,11 +44,13 @@ import com.example.appollorate.R
 import com.example.appollorate.compose.login.LoginApiState
 import com.example.appollorate.compose.login.LoginScreen
 import com.example.appollorate.compose.login.LoginViewModel
+import com.example.appollorate.compose.utils.AppolloRateNavigationType
 import com.example.appollorate.ui.theme.AppollorateTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
+    navigationType: AppolloRateNavigationType,
     goToStartScreen: () -> Unit,
     goToInventories: () -> Unit,
     loginViewModel: LoginViewModel = viewModel(factory = LoginViewModel.Factory),
@@ -55,16 +58,23 @@ fun HomeScreen(
     var showLogin by remember { mutableStateOf(true) }
 
     if (loginViewModel.loginApiState != LoginApiState.Success && showLogin) {
-        LoginScreen(onDismissRequest = { showLogin = false })
+        LoginScreen(
+            onDismissRequest = { if (loginViewModel.loginApiState != LoginApiState.Success) { { showLogin = false } } },
+
+        )
     }
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(vertical = 42.dp, horizontal = 5.dp),
+            modifier = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) {
+                Modifier.padding(vertical = 42.dp, horizontal = 5.dp)
+            } else {
+                Modifier.padding(vertical = 32.dp, horizontal = 5.dp)
+            },
         ) {
             Image(
                 painter = painterResource(R.drawable.book_open_solid),
@@ -88,7 +98,12 @@ fun HomeScreen(
                 defaultElevation = dimensionResource(R.dimen.default_elevation),
             ),
             shape = RoundedCornerShape(dimensionResource(R.dimen.card_corner_radius)),
-            modifier = Modifier.size(width = 320.dp, height = 240.dp),
+            modifier = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) {
+                Modifier.size(width = 320.dp, height = 240.dp)
+            } else {
+                Modifier.size(width = 620.dp, height = 320.dp)
+            },
+
         ) {
             Column(
                 verticalArrangement = Arrangement.Center,
@@ -99,13 +114,15 @@ fun HomeScreen(
                 Icon(
                     imageVector = Icons.Filled.Assignment,
                     contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .size(75.dp),
+                    modifier = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) {
+                        Modifier.fillMaxWidth().size(75.dp)
+                    } else {
+                        Modifier.fillMaxWidth().size(95.dp)
+                    },
                 )
                 Text(
                     text = stringResource(R.string.DAMAGE_REGISTRATION),
-                    fontSize = 30.sp,
+                    fontSize = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) 30.sp else 40.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
                     textAlign = TextAlign.Center,
@@ -126,7 +143,11 @@ fun HomeScreen(
                     defaultElevation = dimensionResource(R.dimen.default_elevation),
                 ),
                 shape = RoundedCornerShape(dimensionResource(R.dimen.card_corner_radius)),
-                modifier = Modifier.size(width = 152.dp, height = 120.dp),
+                modifier = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) {
+                    Modifier.size(width = 152.dp, height = 120.dp)
+                } else {
+                    Modifier.size(width = 302.dp, height = 150.dp)
+                },
             ) {
                 Column(
                     verticalArrangement = Arrangement.Center,
@@ -143,7 +164,7 @@ fun HomeScreen(
                     )
                     Text(
                         text = stringResource(R.string.INVENTORIES),
-                        fontSize = 16.sp,
+                        fontSize = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) 16.sp else 24.sp,
                         fontWeight = FontWeight.SemiBold,
                         color = Color.White,
                         textAlign = TextAlign.Center,
@@ -162,7 +183,11 @@ fun HomeScreen(
                     defaultElevation = dimensionResource(R.dimen.default_elevation),
                 ),
                 shape = RoundedCornerShape(dimensionResource(R.dimen.card_corner_radius)),
-                modifier = Modifier.size(width = 152.dp, height = 120.dp),
+                modifier = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) {
+                    Modifier.size(width = 152.dp, height = 120.dp)
+                } else {
+                    Modifier.size(width = 302.dp, height = 150.dp)
+                },
             ) {
                 Column(
                     verticalArrangement = Arrangement.Center,
@@ -180,7 +205,7 @@ fun HomeScreen(
                     )
                     Text(
                         text = stringResource(R.string.APP_NAME),
-                        fontSize = 16.sp,
+                        fontSize = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) 16.sp else 24.sp,
                         fontWeight = FontWeight.SemiBold,
                         color = Color.White,
                         textAlign = TextAlign.Center,
@@ -191,16 +216,24 @@ fun HomeScreen(
             }
         }
         Spacer(modifier = Modifier.height(46.dp))
-        Text(
-            text = "De inventarisatietool",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.SemiBold,
-        )
-        Text(
-            text = "voor boeken.",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.SemiBold,
-        )
+        if (navigationType == AppolloRateNavigationType.PERMANENT_NAVIGATION_DRAWER) {
+            Text(
+                text = "De online inventarisatietool voor boeken",
+                fontSize = 24.sp,
+                fontWeight = FontWeight.SemiBold,
+            )
+        } else {
+            Text(
+                text = "De inventarisatietool",
+                fontSize = 24.sp,
+                fontWeight = FontWeight.SemiBold,
+            )
+            Text(
+                text = "voor boeken.",
+                fontSize = 24.sp,
+                fontWeight = FontWeight.SemiBold,
+            )
+        }
     }
 }
 
@@ -208,6 +241,6 @@ fun HomeScreen(
 @Composable
 private fun HomeScreenPreview() {
     AppollorateTheme {
-        HomeScreen(goToStartScreen = {}, goToInventories = {})
+        HomeScreen(navigationType = AppolloRateNavigationType.BOTTOM_NAVIGATION, goToStartScreen = {}, goToInventories = {})
     }
 }
