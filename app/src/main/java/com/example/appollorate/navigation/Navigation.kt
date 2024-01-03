@@ -24,7 +24,6 @@ fun NavComponent(
     goToStartScreen: () -> Unit,
     navigateUp: () -> Unit,
     openCamera: () -> Unit,
-    // onImageCaptured: (Uri) -> Unit,
     closeCamera: () -> Unit,
     showCamera: Boolean,
 ) {

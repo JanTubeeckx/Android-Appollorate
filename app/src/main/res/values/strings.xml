@@ -16,4 +16,6 @@
     <string name="CARRIER_MATERIAL">layer-group</string>
     <string name="COVER">Band</string>
     <string name="COVER_MATERIAL">Bandbekleding</string>
+    <string name="CANCEL">Annuleer</string>
+    <string name="CONFIRM">Bevestig</string>
 </resources>

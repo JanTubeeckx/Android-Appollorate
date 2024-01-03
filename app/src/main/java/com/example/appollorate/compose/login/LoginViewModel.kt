@@ -27,6 +27,12 @@ class LoginViewModel(
     var loginApiState: LoginApiState by mutableStateOf(LoginApiState.Loading)
         private set
 
+    fun hideLogin() {
+        _uiState.update {
+            it.copy(showLogin = false)
+        }
+    }
+
     fun setEmail(email: String) {
         _uiState.update {
             it.copy(email = email)
@@ -51,6 +57,14 @@ class LoginViewModel(
             }
             Log.i("Test", "$result")
         }
+    }
+
+    fun logOutUser() {
+        println("Logout")
+        _uiState.update {
+            it.copy(showLogin = true)
+        }
+        loginApiState = LoginApiState.Loading
     }
 
     fun cancel() {

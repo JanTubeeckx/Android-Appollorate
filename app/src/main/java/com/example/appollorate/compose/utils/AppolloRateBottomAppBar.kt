@@ -22,7 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.appollorate.R
+import com.example.appollorate.compose.login.LoginViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -31,6 +33,7 @@ fun AppolloRateBottomAppBar(
     goToStartScreen: () -> Unit,
     goToInventories: () -> Unit,
     logOut: () -> Unit,
+    loginViewModel: LoginViewModel = viewModel(factory = LoginViewModel.Factory),
 ) {
     BottomAppBar(
         containerColor = MaterialTheme.colorScheme.primary,
@@ -90,7 +93,7 @@ fun AppolloRateBottomAppBar(
                 }
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     IconButton(
-                        onClick = logOut,
+                        onClick = { loginViewModel.logOutUser() },
                         modifier = Modifier.size(110.dp),
                     ) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {

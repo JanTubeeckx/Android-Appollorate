@@ -24,9 +24,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,14 +54,14 @@ fun HomeScreen(
     goToInventories: () -> Unit,
     loginViewModel: LoginViewModel = viewModel(factory = LoginViewModel.Factory),
 ) {
-    var showLogin by remember { mutableStateOf(true) }
+    val loginState by loginViewModel.uiState.collectAsState()
 
-    if (loginViewModel.loginApiState != LoginApiState.Success && showLogin) {
+    if (loginViewModel.loginApiState != LoginApiState.Success && loginState.showLogin) {
         LoginScreen(
-            onDismissRequest = { if (loginViewModel.loginApiState != LoginApiState.Success) { { showLogin = false } } },
-
+            onDismissRequest = { if (loginViewModel.loginApiState != LoginApiState.Success) { { loginViewModel.hideLogin() } } },
         )
     }
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,

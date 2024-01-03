@@ -1,18 +1,27 @@
 package com.example.appollorate.compose.login
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -20,9 +29,15 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -37,6 +52,18 @@ fun LoginScreen(
     onDismissRequest: () -> Unit,
 ) {
     val loginState by loginViewModel.uiState.collectAsState()
+    var loggingIn by remember { mutableStateOf(false) }
+    var isPasswordVisible by remember { mutableStateOf(false) }
+
+    val trailingIcon = @Composable {
+        IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+            Icon(
+                if (isPasswordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                contentDescription = "",
+                tint = MaterialTheme.colorScheme.primary,
+            )
+        }
+    }
 
     Dialog(
         onDismissRequest = onDismissRequest,
@@ -53,61 +80,76 @@ fun LoginScreen(
                 ),
                 modifier = Modifier.size(width = 380.dp, height = 400.dp),
             ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight()
-                        .padding(36.dp),
-                ) {
-                    //
-                    Text(
-                        text = "Log in",
-                        style = MaterialTheme.typography.titleLarge,
-                        fontSize = 36.sp,
-                        color = MaterialTheme.colorScheme.primary,
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    OutlinedTextField(
-                        value = loginState.email,
-                        onValueChange = {
-                            loginViewModel.setEmail(it)
-                        },
-                        label = { Text(text = "Email") },
-                    )
-                    OutlinedTextField(
-                        value = loginState.password,
-                        onValueChange = {
-                            loginViewModel.setPassword(it)
-                        },
-                        label = { Text(text = "Wachtwoord") },
-                    )
-                    Spacer(modifier = Modifier.height(36.dp))
-                    Row(
-                        horizontalArrangement = Arrangement.End,
-                        modifier = Modifier.fillMaxWidth(),
+                if (loginViewModel.loginApiState == LoginApiState.Loading && loggingIn) {
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier.fillMaxSize(),
                     ) {
-                        TextButton(
-                            onClick = { loginViewModel.cancel() },
-                            shape = RoundedCornerShape(5.dp),
-                        ) {
-                            Text(
-                                text = "Annuleer",
-                                fontSize = 20.sp,
-                            )
-                        }
-                        TextButton(
-                            onClick = {
-                                loginViewModel.loginUser()
-                                onDismissRequest()
+                        CircularProgressIndicator(
+                            modifier = Modifier.width(40.dp),
+                            color = MaterialTheme.colorScheme.primary,
+                        )
+                    }
+                } else {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                            .padding(36.dp),
+                    ) {
+                        //
+                        Text(
+                            text = "Log in",
+                            style = MaterialTheme.typography.titleLarge,
+                            fontSize = 36.sp,
+                            color = MaterialTheme.colorScheme.primary,
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        OutlinedTextField(
+                            value = loginState.email,
+                            onValueChange = {
+                                loginViewModel.setEmail(it)
                             },
-                            shape = RoundedCornerShape(5.dp),
+                            label = { Text(text = "Email") },
+                        )
+                        OutlinedTextField(
+                            value = loginState.password,
+                            onValueChange = {
+                                loginViewModel.setPassword(it)
+                            },
+                            trailingIcon = trailingIcon,
+                            label = { Text(text = "Wachtwoord") },
+                            visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                        )
+                        Spacer(modifier = Modifier.height(36.dp))
+                        Row(
+                            horizontalArrangement = Arrangement.End,
+                            modifier = Modifier.fillMaxWidth(),
                         ) {
-                            Text(
-                                text = "Bevestig",
-                                fontSize = 20.sp,
-                            )
+                            TextButton(
+                                onClick = { loginViewModel.cancel() },
+                                shape = RoundedCornerShape(5.dp),
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.CANCEL),
+                                    fontSize = 20.sp,
+                                )
+                            }
+                            TextButton(
+                                onClick = {
+                                    loggingIn = true
+                                    loginViewModel.loginUser()
+                                    onDismissRequest()
+                                },
+                                shape = RoundedCornerShape(5.dp),
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.CONFIRM),
+                                    fontSize = 20.sp,
+                                )
+                            }
                         }
                     }
                 }

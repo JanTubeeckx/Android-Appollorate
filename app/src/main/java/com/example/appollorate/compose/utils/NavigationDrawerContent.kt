@@ -17,7 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination
+import com.example.appollorate.compose.login.LoginViewModel
 import com.example.appollorate.navigation.NavigationOverview
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -26,6 +28,7 @@ fun NavigationDrawerContent(
     selectedDestination: NavDestination?,
     onTabPressed: ((String) -> Unit),
     modifier: Modifier = Modifier,
+    loginViewModel: LoginViewModel = viewModel(factory = LoginViewModel.Factory),
 ) {
     Column(
         verticalArrangement = Arrangement.Top,
@@ -128,7 +131,7 @@ fun NavigationDrawerContent(
                 selectedIconColor = Color.Black,
                 selectedTextColor = Color.Black,
             ),
-            onClick = { onTabPressed(NavigationOverview.Start.name) },
+            onClick = { loginViewModel.logOutUser() },
         )
     }
 }
