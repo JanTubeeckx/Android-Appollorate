@@ -1,7 +1,6 @@
 package com.example.appollorate.compose.login
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -29,8 +28,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,6 +35,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -52,13 +50,11 @@ fun LoginScreen(
     onDismissRequest: () -> Unit,
 ) {
     val loginState by loginViewModel.uiState.collectAsState()
-    var loggingIn by remember { mutableStateOf(false) }
-    var isPasswordVisible by remember { mutableStateOf(false) }
 
     val trailingIcon = @Composable {
-        IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+        IconButton(onClick = { loginViewModel.showPassword() }) {
             Icon(
-                if (isPasswordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                if (loginState.isPasswordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility,
                 contentDescription = "",
                 tint = MaterialTheme.colorScheme.primary,
             )
@@ -80,11 +76,18 @@ fun LoginScreen(
                 ),
                 modifier = Modifier.size(width = 380.dp, height = 400.dp),
             ) {
-                if (loginViewModel.loginApiState == LoginApiState.Loading && loggingIn) {
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier.fillMaxSize(),
+                if (loginViewModel.loginApiState == LoginApiState.Loading && loginState.loggingIn) {
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.fillMaxSize().padding(24.dp),
                     ) {
+                        Text(
+                            text = "Een ogenblik geduld, u wordt ingelogd",
+                            fontSize = 20.sp,
+                            textAlign = TextAlign.Center,
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
                         CircularProgressIndicator(
                             modifier = Modifier.width(40.dp),
                             color = MaterialTheme.colorScheme.primary,
@@ -121,7 +124,7 @@ fun LoginScreen(
                             },
                             trailingIcon = trailingIcon,
                             label = { Text(text = "Wachtwoord") },
-                            visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                            visualTransformation = if (loginState.isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                         )
                         Spacer(modifier = Modifier.height(36.dp))
                         Row(
@@ -139,7 +142,7 @@ fun LoginScreen(
                             }
                             TextButton(
                                 onClick = {
-                                    loggingIn = true
+                                    loginViewModel.setLoggingIn()
                                     loginViewModel.loginUser()
                                     onDismissRequest()
                                 },

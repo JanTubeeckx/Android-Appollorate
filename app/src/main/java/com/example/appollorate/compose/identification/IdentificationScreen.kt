@@ -50,10 +50,12 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.appollorate.R
 import com.example.appollorate.compose.camera.CameraScreen
 import com.example.appollorate.compose.inventoryfield.InventoryField
+import com.example.appollorate.compose.utils.AppolloRateNavigationType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun IdentificationScreen(
+    navigationType: AppolloRateNavigationType,
     identificationScreenViewModel: IdentificationScreenViewModel = viewModel(factory = IdentificationScreenViewModel.Factory),
     showCamera: Boolean,
     openCamera: () -> Unit,
@@ -78,9 +80,11 @@ fun IdentificationScreen(
             LazyColumn(
                 state = lazyListState,
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
+                modifier = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) {
+                    Modifier.fillMaxWidth().padding(16.dp)
+                } else {
+                    Modifier.fillMaxWidth().padding(40.dp)
+                },
             ) {
                 items(identificationScreenStateState.inventoryFieldList, key = { i -> i.id }) {
                     InventoryField(inventoryField = it)

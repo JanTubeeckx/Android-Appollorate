@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -33,12 +34,14 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.appollorate.R
+import com.example.appollorate.compose.utils.AppolloRateNavigationType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FormCharMenu(
     formCharMenuViewModel: FormCharMenuViewModel = viewModel(factory = FormCharMenuViewModel.Factory),
     navController: NavController,
+    navigationType: AppolloRateNavigationType,
 ) {
     val formCharMenuState by formCharMenuViewModel.uiState.collectAsState()
     val lazyListState = rememberLazyListState()
@@ -52,9 +55,11 @@ fun FormCharMenu(
     LazyColumn(
         state = lazyListState,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(20.dp),
+        modifier = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) {
+            Modifier.fillMaxHeight().padding(20.dp)
+        } else {
+            Modifier.fillMaxHeight().padding(30.dp)
+        },
     ) {
         items(formCharMenuState.FormAndDamageInventorySteps, key = { s -> s.id }) {
             ElevatedCard(
@@ -72,15 +77,20 @@ fun FormCharMenu(
                     defaultElevation = dimensionResource(R.dimen.default_elevation),
                 ),
                 shape = RoundedCornerShape(dimensionResource(R.dimen.card_corner_radius)),
-                modifier = Modifier
-                    .size(width = 370.dp, height = 113.dp),
+                modifier = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) {
+                    Modifier.fillMaxSize().height(113.dp)
+                } else {
+                    Modifier.fillMaxSize().height(160.dp)
+                },
             ) {
                 Row(
                     horizontalArrangement = Arrangement.Start,
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .padding(18.dp),
+                    modifier = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) {
+                        Modifier.fillMaxHeight().padding(18.dp)
+                    } else {
+                        Modifier.fillMaxHeight().padding(32.dp)
+                    },
                 ) {
                     Icon(
                         painter = painterResource(
@@ -93,12 +103,15 @@ fun FormCharMenu(
                         ),
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier
-                            .size(40.dp),
+                        modifier = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) {
+                            Modifier.size(40.dp)
+                        } else {
+                            Modifier.size(56.dp)
+                        },
                     )
                     Text(
                         text = it.description,
-                        fontSize = 26.sp,
+                        fontSize = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) 26.sp else 32.sp,
                         fontWeight = FontWeight.SemiBold,
                         color = MaterialTheme.colorScheme.primary,
                         textAlign = TextAlign.Start,

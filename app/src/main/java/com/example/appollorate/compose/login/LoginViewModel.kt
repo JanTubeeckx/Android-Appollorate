@@ -33,6 +33,12 @@ class LoginViewModel(
         }
     }
 
+    fun showPassword() {
+        _uiState.update {
+            it.copy(isPasswordVisible = !_uiState.value.isPasswordVisible)
+        }
+    }
+
     fun setEmail(email: String) {
         _uiState.update {
             it.copy(email = email)
@@ -42,6 +48,12 @@ class LoginViewModel(
     fun setPassword(password: String) {
         _uiState.update {
             it.copy(password = password)
+        }
+    }
+
+    fun setLoggingIn() {
+        _uiState.update {
+            it.copy(loggingIn = true)
         }
     }
 
@@ -62,7 +74,10 @@ class LoginViewModel(
     fun logOutUser() {
         println("Logout")
         _uiState.update {
-            it.copy(showLogin = true)
+            it.copy(
+                showLogin = true,
+                loggingIn = false,
+            )
         }
         loginApiState = LoginApiState.Loading
     }

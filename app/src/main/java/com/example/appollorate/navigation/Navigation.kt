@@ -36,7 +36,7 @@ fun NavComponent(
             HomeScreen(navigationType = navigationType, goToStartScreen = goToStartScreen, goToInventories = {})
         }
         composable(route = NavigationOverview.StartScreen.name) {
-            StartScreen(navController = navController)
+            StartScreen(navigationType = navigationType, navController = navController)
         }
         composable(
             "Identification/{stepId}",
@@ -45,6 +45,7 @@ fun NavComponent(
             ),
         ) {
             IdentificationScreen(
+                navigationType = navigationType,
                 goToStartScreen = goToStartScreen,
                 openCamera = openCamera,
                 showCamera = showCamera,
@@ -57,10 +58,10 @@ fun NavComponent(
                 navArgument("stepId") { type = NavType.StringType },
             ),
         ) {
-            ProtectionScreen(goToStartScreen = goToStartScreen)
+            ProtectionScreen(navigationType = navigationType, goToStartScreen = goToStartScreen)
         }
         composable(route = NavigationOverview.ShapeAndDamage.name) {
-            FormCharMenu(navController = navController)
+            FormCharMenu(navigationType = navigationType, navController = navController)
         }
         composable(
             "Cover/{stepId}",
@@ -68,7 +69,7 @@ fun NavComponent(
                 navArgument("stepId") { type = NavType.StringType },
             ),
         ) {
-            CoverFormChars(navController = navController)
+            CoverFormChars(navigationType = navigationType, navController = navController)
         }
         composable(
             "CoverMaterial/{stepId}",
@@ -76,7 +77,7 @@ fun NavComponent(
                 navArgument("stepId") { type = NavType.StringType },
             ),
         ) {
-            CoverMaterialScreen(navigateUp = navigateUp)
+            CoverMaterialScreen(navigationType = navigationType, navigateUp = navigateUp)
         }
     }
 }

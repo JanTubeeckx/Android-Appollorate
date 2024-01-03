@@ -22,10 +22,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.appollorate.R
 import com.example.appollorate.compose.inventoryfield.InventoryField
+import com.example.appollorate.compose.utils.AppolloRateNavigationType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CoverMaterialScreen(
+    navigationType: AppolloRateNavigationType,
     coverMaterialScreenViewModel: CoverMaterialScreenViewModel = viewModel(factory = CoverMaterialScreenViewModel.Factory),
     navigateUp: () -> Unit,
 ) {
@@ -39,9 +41,11 @@ fun CoverMaterialScreen(
         LazyColumn(
             state = lazyListState,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+            modifier = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) {
+                Modifier.fillMaxWidth().padding(16.dp)
+            } else {
+                Modifier.fillMaxWidth().padding(40.dp)
+            },
         ) {
             items(inventoryFieldListState.inventoryFieldList, key = { i -> i.id }) {
                 InventoryField(inventoryField = it)

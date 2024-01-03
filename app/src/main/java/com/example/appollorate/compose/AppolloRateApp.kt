@@ -58,6 +58,7 @@ fun AppolloRateApp(
         PermanentNavigationDrawer(drawerContent = {
             PermanentDrawerSheet(Modifier.width(160.dp)) {
                 NavigationDrawerContent(
+                    navController = navController,
                     selectedDestination = navController.currentDestination,
                     onTabPressed = { node: String -> navController.navigate(node) },
                     modifier = Modifier
@@ -105,10 +106,10 @@ fun AppolloRateApp(
             bottomBar = {
                 if (canNavigateBack) {
                     AppolloRateBottomAppBar(
+                        navController = navController,
                         goHome = goToHome,
                         goToStartScreen = goToStartScreen,
                         goToInventories = goToReservations,
-                        logOut = {},
                     )
                 }
             },

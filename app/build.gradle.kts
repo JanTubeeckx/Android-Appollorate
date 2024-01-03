@@ -73,6 +73,7 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended")
     implementation("androidx.navigation:navigation-runtime-ktx:2.7.6")
     implementation("androidx.navigation:navigation-compose:2.7.5")
+    implementation("androidx.slidingpanelayout:slidingpanelayout:1.2.0")
     implementation("io.coil-kt:coil-compose:2.4.0")
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -33,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.appollorate.R
+import com.example.appollorate.compose.utils.AppolloRateNavigationType
 import com.example.appollorate.navigation.NavigationOverview
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -40,6 +42,7 @@ import com.example.appollorate.navigation.NavigationOverview
 fun StartScreen(
     startScreenViewModel: StartScreenViewModel = viewModel(factory = StartScreenViewModel.Factory),
     navController: NavController,
+    navigationType: AppolloRateNavigationType,
 ) {
     val startScreenState by startScreenViewModel.uiState.collectAsState()
     val lazyListState = rememberLazyListState()
@@ -53,9 +56,12 @@ fun StartScreen(
     LazyColumn(
         state = lazyListState,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(20.dp),
+        verticalArrangement = Arrangement.Top,
+        modifier = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) {
+            Modifier.fillMaxHeight().padding(20.dp)
+        } else {
+            Modifier.fillMaxHeight().padding(30.dp)
+        },
     ) {
         items(startScreenState.identificationInventorySteps, key = { s -> s.id }) {
             ElevatedCard(
@@ -74,8 +80,11 @@ fun StartScreen(
                     defaultElevation = dimensionResource(R.dimen.default_elevation),
                 ),
                 shape = RoundedCornerShape(dimensionResource(R.dimen.card_corner_radius)),
-                modifier = Modifier
-                    .size(width = 370.dp, height = 155.dp),
+                modifier = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) {
+                    Modifier.fillMaxSize().height(155.dp)
+                } else {
+                    Modifier.fillMaxSize().height(220.dp)
+                },
             ) {
                 Column(
                     verticalArrangement = Arrangement.Center,

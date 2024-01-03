@@ -23,16 +23,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.appollorate.R
 import com.example.appollorate.compose.login.LoginViewModel
+import com.example.appollorate.navigation.NavigationOverview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppolloRateBottomAppBar(
+    navController: NavController,
     goHome: () -> Unit,
     goToStartScreen: () -> Unit,
     goToInventories: () -> Unit,
-    logOut: () -> Unit,
     loginViewModel: LoginViewModel = viewModel(factory = LoginViewModel.Factory),
 ) {
     BottomAppBar(
@@ -93,7 +95,10 @@ fun AppolloRateBottomAppBar(
                 }
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     IconButton(
-                        onClick = { loginViewModel.logOutUser() },
+                        onClick = {
+                            loginViewModel.logOutUser()
+                            navController.navigate(NavigationOverview.Start.name)
+                        },
                         modifier = Modifier.size(110.dp),
                     ) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {

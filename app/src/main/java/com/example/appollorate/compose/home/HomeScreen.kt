@@ -26,7 +26,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -65,14 +64,14 @@ fun HomeScreen(
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.SpaceEvenly,
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) {
                 Modifier.padding(vertical = 42.dp, horizontal = 5.dp)
             } else {
-                Modifier.padding(vertical = 32.dp, horizontal = 5.dp)
+                Modifier.padding(vertical = 8.dp, horizontal = 5.dp)
             },
         ) {
             Image(
@@ -88,133 +87,137 @@ fun HomeScreen(
                 fontWeight = FontWeight.ExtraBold,
             )
         }
-        ElevatedCard(
-            onClick = goToStartScreen,
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.primary,
-            ),
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = dimensionResource(R.dimen.default_elevation),
-            ),
-            shape = RoundedCornerShape(dimensionResource(R.dimen.card_corner_radius)),
-            modifier = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) {
-                Modifier.size(width = 320.dp, height = 240.dp)
-            } else {
-                Modifier.size(width = 620.dp, height = 320.dp)
-            },
-
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Column(
-                verticalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .padding(16.dp),
+            ElevatedCard(
+                onClick = goToStartScreen,
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                ),
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = dimensionResource(R.dimen.default_elevation),
+                ),
+                shape = RoundedCornerShape(dimensionResource(R.dimen.card_corner_radius)),
+                modifier = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) {
+                    Modifier.size(width = 320.dp, height = 240.dp)
+                } else {
+                    Modifier.size(width = 620.dp, height = 320.dp)
+                },
+
             ) {
-                Icon(
-                    imageVector = Icons.Filled.Assignment,
-                    contentDescription = null,
+                Column(
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .padding(16.dp),
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Assignment,
+                        contentDescription = null,
+                        modifier = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) {
+                            Modifier.fillMaxWidth().size(75.dp)
+                        } else {
+                            Modifier.fillMaxWidth().size(95.dp)
+                        },
+                    )
+                    Text(
+                        text = stringResource(R.string.DAMAGE_REGISTRATION),
+                        fontSize = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) 30.sp else 40.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            Row {
+                ElevatedCard(
+                    onClick = goToInventories,
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                    ),
+                    elevation = CardDefaults.cardElevation(
+                        defaultElevation = dimensionResource(R.dimen.default_elevation),
+                    ),
+                    shape = RoundedCornerShape(dimensionResource(R.dimen.card_corner_radius)),
                     modifier = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) {
-                        Modifier.fillMaxWidth().size(75.dp)
+                        Modifier.size(width = 152.dp, height = 120.dp)
                     } else {
-                        Modifier.fillMaxWidth().size(95.dp)
+                        Modifier.size(width = 302.dp, height = 150.dp)
                     },
-                )
-                Text(
-                    text = stringResource(R.string.DAMAGE_REGISTRATION),
-                    fontSize = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) 30.sp else 40.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                )
-            }
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-        Row {
-            ElevatedCard(
-                onClick = goToInventories,
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                ),
-                elevation = CardDefaults.cardElevation(
-                    defaultElevation = dimensionResource(R.dimen.default_elevation),
-                ),
-                shape = RoundedCornerShape(dimensionResource(R.dimen.card_corner_radius)),
-                modifier = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) {
-                    Modifier.size(width = 152.dp, height = 120.dp)
-                } else {
-                    Modifier.size(width = 302.dp, height = 150.dp)
-                },
-            ) {
-                Column(
-                    verticalArrangement = Arrangement.Center,
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .padding(16.dp),
                 ) {
-                    Icon(
-                        imageVector = Icons.Filled.List,
-                        contentDescription = null,
+                    Column(
+                        verticalArrangement = Arrangement.Center,
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .size(55.dp),
-                    )
-                    Text(
-                        text = stringResource(R.string.INVENTORIES),
-                        fontSize = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) 16.sp else 24.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.White,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                    )
+                            .fillMaxHeight()
+                            .padding(16.dp),
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.List,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .size(55.dp),
+                        )
+                        Text(
+                            text = stringResource(R.string.INVENTORIES),
+                            fontSize = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) 16.sp else 24.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color.White,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                        )
+                    }
                 }
-            }
-            Spacer(modifier = Modifier.width(16.dp))
-            ElevatedCard(
-                onClick = { /*TODO*/ },
-                colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                ),
-                elevation = CardDefaults.cardElevation(
-                    defaultElevation = dimensionResource(R.dimen.default_elevation),
-                ),
-                shape = RoundedCornerShape(dimensionResource(R.dimen.card_corner_radius)),
-                modifier = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) {
-                    Modifier.size(width = 152.dp, height = 120.dp)
-                } else {
-                    Modifier.size(width = 302.dp, height = 150.dp)
-                },
-            ) {
-                Column(
-                    verticalArrangement = Arrangement.Center,
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .padding(16.dp),
+                Spacer(modifier = Modifier.width(16.dp))
+                ElevatedCard(
+                    onClick = { /*TODO*/ },
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                    ),
+                    elevation = CardDefaults.cardElevation(
+                        defaultElevation = dimensionResource(R.dimen.default_elevation),
+                    ),
+                    shape = RoundedCornerShape(dimensionResource(R.dimen.card_corner_radius)),
+                    modifier = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) {
+                        Modifier.size(width = 152.dp, height = 120.dp)
+                    } else {
+                        Modifier.size(width = 302.dp, height = 150.dp)
+                    },
                 ) {
-                    Icon(
-                        imageVector = Icons.Filled.Info,
-                        contentDescription = null,
+                    Column(
+                        verticalArrangement = Arrangement.Center,
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .size(55.dp)
-                            .padding(5.dp),
-                    )
-                    Text(
-                        text = stringResource(R.string.APP_NAME),
-                        fontSize = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) 16.sp else 24.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.White,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                    )
+                            .fillMaxHeight()
+                            .padding(16.dp),
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Info,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .size(55.dp)
+                                .padding(5.dp),
+                        )
+                        Text(
+                            text = stringResource(R.string.APP_NAME),
+                            fontSize = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) 16.sp else 24.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color.White,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                        )
+                    }
                 }
             }
         }
-        Spacer(modifier = Modifier.height(46.dp))
+        if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) Spacer(modifier = Modifier.height(46.dp))
         if (navigationType == AppolloRateNavigationType.PERMANENT_NAVIGATION_DRAWER) {
             Text(
                 text = "De online inventarisatietool voor boeken",
