@@ -40,7 +40,6 @@ class CachingInventoryFieldRepository(
         try {
             inventoryFieldApiService.getInventoryFieldsAsFlow(stepId).asDomainObjects().collect() {
                     value ->
-                Log.i("TestRefresh", "$value")
                 for (inventoryField in value) {
                     insertInventoryField(inventoryField)
                 }

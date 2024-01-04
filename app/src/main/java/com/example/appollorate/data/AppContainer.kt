@@ -24,6 +24,7 @@ interface AppContainer {
     val loginRepository: LoginRepository
     val inventoryStepRepository: InventoryStepRepository
     val inventoryFieldRepository: InventoryFieldRepository
+    val inventoryFieldApiService: InventoryFieldApiService
 }
 
 class DefaultAppContainer(private val context: Context) : AppContainer {
@@ -75,5 +76,8 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
 
     override val inventoryFieldRepository: InventoryFieldRepository by lazy {
         CachingInventoryFieldRepository(AppDatabase.getDataBase(context = context).inventoryFieldDao(), inventoryFieldRetrofitService)
+    }
+    override val inventoryFieldApiService: InventoryFieldApiService by lazy {
+        retrofit.create(InventoryFieldApiService::class.java)
     }
 }

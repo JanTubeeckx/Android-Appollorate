@@ -149,7 +149,10 @@ fun IdentificationScreen(
             horizontalArrangement = Arrangement.End,
         ) {
             Button(
-                onClick = { closeCamera() },
+                onClick = {
+                    closeCamera()
+                    identificationScreenViewModel.sendImage(photoUri)
+                },
                 contentPadding = PaddingValues(0.dp),
                 modifier = Modifier.width(40.dp),
             ) {

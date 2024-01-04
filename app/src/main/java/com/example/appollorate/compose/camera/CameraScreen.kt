@@ -2,7 +2,9 @@ package com.example.appollorate.compose.camera
 
 import android.Manifest
 import android.content.ContentValues
+import android.content.Context
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.icu.text.DateFormat
 import android.net.Uri
 import android.os.Build
@@ -41,7 +43,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun CameraScreen(
-    cameraScreenViewModel: CameraScreenViewModel = viewModel(),
+    cameraScreenViewModel: CameraScreenViewModel = viewModel(factory = CameraScreenViewModel.Factory),
     onImageCaptured: (Uri) -> Unit,
 ) {
     val context = LocalContext.current
@@ -69,7 +71,7 @@ fun CameraScreen(
     )
 
     if (permissionState.value) {
-        CameraView(imageCapture = cameraScreenViewModel.imageCapture.value, onImageCaptured = onImageCaptured)
+        CameraView(imageCapture = cameraScreenViewModel.imageCapture.value, onImageCaptured = onImageCaptured, cameraScreenViewModel = cameraScreenViewModel)
     } else {
         LaunchedEffect(key1 = true) {
             resultLauncher.launch(cameraScreenViewModel.REQUIRED_PERMISSIONS)
@@ -78,7 +80,9 @@ fun CameraScreen(
 }
 
 @Composable
+@androidx.annotation.OptIn(androidx.camera.core.ExperimentalGetImage::class)
 fun CameraView(
+    cameraScreenViewModel: CameraScreenViewModel,
     imageCapture: ImageCapture,
     onImageCaptured: (Uri) -> Unit,
 ) {
@@ -100,6 +104,7 @@ fun CameraView(
                 put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/CameraX-Image")
             }
         }
+
         // Create output options object which contains file + metadata
         val outputOptions = ImageCapture.OutputFileOptions
             .Builder(
@@ -108,22 +113,34 @@ fun CameraView(
                 contentValues,
             )
             .build()
-        // Set up image capture listener, which is triggered after photo has
-        // been taken
+
+        fun getRealPathFromImageURI(context: Context, contentUri: Uri?): String? {
+            var cursor: Cursor? = null
+            return try {
+                val proj = arrayOf(MediaStore.Images.Media.DATA)
+                cursor = context.contentResolver.query(contentUri!!, proj, null, null, null)
+                val column_index = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+                cursor.moveToFirst()
+                cursor.getString(column_index)
+            } finally {
+                cursor?.close()
+            }
+        }
+
         imageCapture.takePicture(
             outputOptions,
             ContextCompat.getMainExecutor(context),
             object : ImageCapture.OnImageSavedCallback {
-                override fun onError(exc: ImageCaptureException) {
-                    Log.e(ContentValues.TAG, "Photo capture failed: ${exc.message}", exc)
+                override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                    val msg = "Photo capture succeeded: ${output.savedUri}"
+                    // Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                    Log.d(ContentValues.TAG, msg)
+                    val imagePath = getRealPathFromImageURI(context, output.savedUri)
+                    cameraScreenViewModel.sendImage(imagePath)
+                    onImageCaptured(output.savedUri!!)
                 }
 
-                override fun
-                onImageSaved(output: ImageCapture.OutputFileResults) {
-/*                    val msg = "Photo capture succeeded: ${output.savedUri}"
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-                    Log.d(ContentValues.TAG, msg)*/
-                    onImageCaptured(output.savedUri!!)
+                override fun onError(exception: ImageCaptureException) {
                 }
             },
         )
@@ -161,10 +178,14 @@ fun CameraView(
             }, ContextCompat.getMainExecutor(context))
             previewView
         },
-        modifier = Modifier.fillMaxHeight().fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxHeight()
+            .fillMaxWidth(),
     )
     Row(
-        Modifier.fillMaxHeight().fillMaxWidth(),
+        Modifier
+            .fillMaxHeight()
+            .fillMaxWidth(),
         verticalAlignment = Alignment.Bottom,
         horizontalArrangement = Arrangement.Center,
     ) {

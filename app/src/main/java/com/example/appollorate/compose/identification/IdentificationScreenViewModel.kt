@@ -1,5 +1,6 @@
 package com.example.appollorate.compose.identification
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -48,6 +49,10 @@ class IdentificationScreenViewModel(
         } catch (e: IOException) {
             Log.e("Error", "$e")
         }
+    }
+
+    fun sendImage(photoUri: Uri) {
+        println(photoUri)
     }
 
     companion object {
