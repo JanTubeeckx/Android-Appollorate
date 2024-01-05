@@ -1,6 +1,7 @@
 package com.example.appollorate.data
 
 import android.content.Context
+import com.example.appollorate.api.inventory.InventoryApiService
 import com.example.appollorate.api.inventoryfield.InventoryFieldApiService
 import com.example.appollorate.api.inventorystep.InventoryStepApiService
 import com.example.appollorate.api.login.LoginApiService
@@ -25,6 +26,7 @@ interface AppContainer {
     val inventoryStepRepository: InventoryStepRepository
     val inventoryFieldRepository: InventoryFieldRepository
     val inventoryFieldApiService: InventoryFieldApiService
+    val inventoryApiService: InventoryApiService
 }
 
 class DefaultAppContainer(private val context: Context) : AppContainer {
@@ -46,7 +48,9 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
     }.build()
 
     private val gson = GsonBuilder().setLenient().create()
-    private val baseUrl = "https://inventappwebservices.azurewebsites.net"
+
+    // private val baseUrl = "https://inventappwebservices.azurewebsites.net"
+    private val baseUrl = "http://10.0.2.2:9000"
     private val retrofit = Retrofit.Builder()
         .baseUrl(baseUrl)
         .client(client)
@@ -79,5 +83,8 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
     }
     override val inventoryFieldApiService: InventoryFieldApiService by lazy {
         retrofit.create(InventoryFieldApiService::class.java)
+    }
+    override val inventoryApiService: InventoryApiService by lazy {
+        retrofit.create(InventoryApiService::class.java)
     }
 }

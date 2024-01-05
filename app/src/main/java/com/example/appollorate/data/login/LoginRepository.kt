@@ -21,6 +21,7 @@ class LoginRepositoryImpl(
         val response = loginApiService.loginUser(loginRequest)
         try {
             preferences.saveLoginToken(response.token)
+            preferences.saveUserName(response.user.id)
         } catch (e: IOException) {
             Log.i("Error", "${e.message}")
         } catch (e: HttpException) {

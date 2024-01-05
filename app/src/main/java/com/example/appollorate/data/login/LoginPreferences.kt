@@ -9,8 +9,12 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.firstOrNull
 
 class LoginPreferences(private val context: Context) {
-    val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "LocalData")
-    val AUTH_KEY = stringPreferencesKey("auth_key")
+
+    companion object {
+        val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "LocalData")
+        val AUTH_KEY = stringPreferencesKey("auth_key")
+        val USERNAME = stringPreferencesKey("username")
+    }
 
     suspend fun saveLoginToken(loginToken: String) {
         context.dataStore.edit { LocalData ->
@@ -18,7 +22,17 @@ class LoginPreferences(private val context: Context) {
         }
     }
 
+    suspend fun saveUserName(userName: String) {
+        context.dataStore.edit { LocalData ->
+            LocalData[USERNAME] = userName.uppercase()
+        }
+    }
+
     suspend fun getLoginToken(): String? {
         return context.dataStore.data.firstOrNull()?.get(AUTH_KEY)
+    }
+
+    suspend fun getUserName(): String? {
+        return context.dataStore.data.firstOrNull()?.get(USERNAME)
     }
 }

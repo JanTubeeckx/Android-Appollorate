@@ -7,4 +7,10 @@ data class InventoryFieldState(
     val radioOptions: List<String> = listOf("Ja", "Neen"),
     val selectedRadioOption: String = radioOptions[0],
     val inventoryData: MutableMap<String, String> = mutableMapOf(),
+    var completedInventoryData: MutableList<InventoryObject> = mutableListOf(),
+)
+
+data class InventoryObject(
+    val inventoryFieldId: String,
+    val inventoryData: String,
 )

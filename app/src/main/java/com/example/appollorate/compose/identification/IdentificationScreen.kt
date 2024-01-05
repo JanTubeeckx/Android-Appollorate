@@ -129,7 +129,10 @@ fun IdentificationScreen(
             }
             Spacer(modifier = Modifier.height(24.dp))
             ElevatedButton(
-                onClick = { goToStartScreen() },
+                onClick = {
+                    inventoryFieldViewModel.sendInput()
+                    goToStartScreen()
+                },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                 ),
