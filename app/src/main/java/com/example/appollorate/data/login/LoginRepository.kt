@@ -9,7 +9,7 @@ import com.example.appollorate.api.login.LoginRequest
 import java.io.IOException
 
 interface LoginRepository {
-    suspend fun login(loginRequest: LoginRequest)
+    suspend fun login(loginRequest: LoginRequest): String
 }
 
 class LoginRepositoryImpl(
@@ -17,15 +17,15 @@ class LoginRepositoryImpl(
     private val preferences: LoginPreferences,
 ) : LoginRepository {
     @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
-    override suspend fun login(loginRequest: LoginRequest) {
+    override suspend fun login(loginRequest: LoginRequest): String {
+        val response = loginApiService.loginUser(loginRequest)
         try {
-            val response = loginApiService.loginUser(loginRequest)
-            // println(response.token)
             preferences.saveLoginToken(response.token)
         } catch (e: IOException) {
             Log.i("Error", "${e.message}")
         } catch (e: HttpException) {
             Log.i("Error", "${e.message}")
         }
+        return response.token
     }
 }

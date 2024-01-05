@@ -2,9 +2,7 @@ package com.example.appollorate.compose.camera
 
 import android.Manifest
 import android.content.ContentValues
-import android.content.Context
 import android.content.pm.PackageManager
-import android.database.Cursor
 import android.icu.text.DateFormat
 import android.net.Uri
 import android.os.Build
@@ -71,7 +69,7 @@ fun CameraScreen(
     )
 
     if (permissionState.value) {
-        CameraView(imageCapture = cameraScreenViewModel.imageCapture.value, onImageCaptured = onImageCaptured, cameraScreenViewModel = cameraScreenViewModel)
+        CameraView(imageCapture = cameraScreenViewModel.imageCapture.value, onImageCaptured = onImageCaptured)
     } else {
         LaunchedEffect(key1 = true) {
             resultLauncher.launch(cameraScreenViewModel.REQUIRED_PERMISSIONS)
@@ -82,7 +80,6 @@ fun CameraScreen(
 @Composable
 @androidx.annotation.OptIn(androidx.camera.core.ExperimentalGetImage::class)
 fun CameraView(
-    cameraScreenViewModel: CameraScreenViewModel,
     imageCapture: ImageCapture,
     onImageCaptured: (Uri) -> Unit,
 ) {
@@ -114,19 +111,6 @@ fun CameraView(
             )
             .build()
 
-        fun getRealPathFromImageURI(context: Context, contentUri: Uri?): String? {
-            var cursor: Cursor? = null
-            return try {
-                val proj = arrayOf(MediaStore.Images.Media.DATA)
-                cursor = context.contentResolver.query(contentUri!!, proj, null, null, null)
-                val column_index = cursor!!.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-                cursor.moveToFirst()
-                cursor.getString(column_index)
-            } finally {
-                cursor?.close()
-            }
-        }
-
         imageCapture.takePicture(
             outputOptions,
             ContextCompat.getMainExecutor(context),
@@ -135,8 +119,6 @@ fun CameraView(
                     val msg = "Photo capture succeeded: ${output.savedUri}"
                     // Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
                     Log.d(ContentValues.TAG, msg)
-                    val imagePath = getRealPathFromImageURI(context, output.savedUri)
-                    cameraScreenViewModel.sendImage(imagePath)
                     onImageCaptured(output.savedUri!!)
                 }
 

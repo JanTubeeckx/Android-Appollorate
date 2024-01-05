@@ -50,6 +50,7 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.appollorate.R
 import com.example.appollorate.compose.camera.CameraScreen
 import com.example.appollorate.compose.inventoryfield.InventoryField
+import com.example.appollorate.compose.inventoryfield.InventoryFieldViewModel
 import com.example.appollorate.compose.utils.AppolloRateNavigationType
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -57,13 +58,15 @@ import com.example.appollorate.compose.utils.AppolloRateNavigationType
 fun IdentificationScreen(
     navigationType: AppolloRateNavigationType,
     identificationScreenViewModel: IdentificationScreenViewModel = viewModel(factory = IdentificationScreenViewModel.Factory),
+    inventoryFieldViewModel: InventoryFieldViewModel = viewModel(factory = InventoryFieldViewModel.Factory),
     showCamera: Boolean,
     openCamera: () -> Unit,
     closeCamera: () -> Unit,
     goToStartScreen: () -> Unit,
 ) {
-    val identificationScreenStateState by identificationScreenViewModel.uiState.collectAsState()
+    val identificationScreenState by identificationScreenViewModel.uiState.collectAsState()
     val lazyListState = rememberLazyListState()
+
     var showImage by remember { mutableStateOf(false) }
     var photoUri by remember { mutableStateOf(Uri.EMPTY) }
 
@@ -81,12 +84,16 @@ fun IdentificationScreen(
                 state = lazyListState,
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = if (navigationType == AppolloRateNavigationType.BOTTOM_NAVIGATION) {
-                    Modifier.fillMaxWidth().padding(16.dp)
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
                 } else {
-                    Modifier.fillMaxWidth().padding(40.dp)
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(40.dp)
                 },
             ) {
-                items(identificationScreenStateState.inventoryFieldList, key = { i -> i.id }) {
+                items(identificationScreenState.inventoryFieldList, key = { i -> i.id }) {
                     InventoryField(inventoryField = it)
                 }
             }
@@ -151,7 +158,8 @@ fun IdentificationScreen(
             Button(
                 onClick = {
                     closeCamera()
-                    identificationScreenViewModel.sendImage(photoUri)
+                    val result = identificationScreenViewModel.sendImage(photoUri)
+                    inventoryFieldViewModel.setInput("Image", result)
                 },
                 contentPadding = PaddingValues(0.dp),
                 modifier = Modifier.width(40.dp),
