@@ -13,7 +13,6 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 class CameraScreenViewModel : ViewModel() {
 
     var currentPermissionState = mutableStateOf(false)
-
     var imageCapture: MutableState<ImageCapture> = mutableStateOf(ImageCapture.Builder().build())
 
     fun setPermissionState(granted: Boolean) {

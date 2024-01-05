@@ -32,6 +32,7 @@ class InventoryFieldViewModel() : ViewModel() {
                 dropDownValue = dropDownValue,
             )
         }
+        _uiState.value.inventoryData[id] = value
         return dropDownState[id]!!
     }
 
