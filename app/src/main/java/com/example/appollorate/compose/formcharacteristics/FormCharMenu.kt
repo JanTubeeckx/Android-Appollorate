@@ -39,9 +39,9 @@ import com.example.appollorate.compose.utils.AppolloRateNavigationType
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FormCharMenu(
-    formCharMenuViewModel: FormCharMenuViewModel = viewModel(factory = FormCharMenuViewModel.Factory),
     navController: NavController,
     navigationType: AppolloRateNavigationType,
+    formCharMenuViewModel: FormCharMenuViewModel = viewModel(factory = FormCharMenuViewModel.Factory),
 ) {
     val formCharMenuState by formCharMenuViewModel.uiState.collectAsState()
     val lazyListState = rememberLazyListState()

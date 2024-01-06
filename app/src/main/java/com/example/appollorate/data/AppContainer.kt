@@ -7,6 +7,8 @@ import com.example.appollorate.api.inventorystep.InventoryStepApiService
 import com.example.appollorate.api.login.LoginApiService
 import com.example.appollorate.data.database.AppDatabase
 import com.example.appollorate.data.exception.ResultCallAdapterFactory
+import com.example.appollorate.data.inventory.CachingInventoryRepository
+import com.example.appollorate.data.inventory.InventoryRepository
 import com.example.appollorate.data.inventoryfield.CachingInventoryFieldRepository
 import com.example.appollorate.data.inventoryfield.InventoryFieldRepository
 import com.example.appollorate.data.inventorystep.CachingInventoryStepRepository
@@ -27,6 +29,7 @@ interface AppContainer {
     val inventoryStepRepository: InventoryStepRepository
     val inventoryFieldRepository: InventoryFieldRepository
     val inventoryFieldApiService: InventoryFieldApiService
+    val inventoryRepository: InventoryRepository
     val inventoryApiService: InventoryApiService
 }
 
@@ -63,7 +66,7 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
     }
 
     override val loginRepository: LoginRepository by lazy {
-        LoginRepositoryImpl(loginRetrofitService, loginPreferences)
+        LoginRepositoryImpl(loginRetrofitService)
     }
 
     private val inventoryStepRetrofitService: InventoryStepApiService by lazy {
@@ -84,6 +87,10 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
     override val inventoryFieldApiService: InventoryFieldApiService by lazy {
         retrofit.create(InventoryFieldApiService::class.java)
     }
+    override val inventoryRepository: InventoryRepository by lazy {
+        CachingInventoryRepository(AppDatabase.getDataBase(context = context).inventoryDao(), inventoryApiService)
+    }
+
     override val inventoryApiService: InventoryApiService by lazy {
         retrofit.create(InventoryApiService::class.java)
     }

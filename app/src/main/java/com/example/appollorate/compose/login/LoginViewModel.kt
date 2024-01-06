@@ -10,6 +10,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.appollorate.AppolloRateApplication
 import com.example.appollorate.api.login.LoginRequest
+import com.example.appollorate.data.login.LoginPreferences
 import com.example.appollorate.data.login.LoginRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,6 +20,7 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val loginRepository: LoginRepository,
+    private val preferences: LoginPreferences,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(LoginState())
     val uiState: StateFlow<LoginState> = _uiState.asStateFlow()
@@ -70,6 +72,8 @@ class LoginViewModel(
                 password = _uiState.value.password,
             )
             loginRepository.login(loginRequest).onSuccess {
+                preferences.saveLoginToken(it.token)
+                preferences.saveUserName(it.user.email)
                 loginApiState = LoginApiState.Success
             }.onFailure {
                 println("loginerror")
@@ -105,7 +109,9 @@ class LoginViewModel(
                 if (Instance == null) {
                     val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as AppolloRateApplication)
                     val loginRepository = application.container.loginRepository
-                    Instance = LoginViewModel(loginRepository = loginRepository)
+                    val context = application.applicationContext
+                    val loginPreferences = LoginPreferences(context)
+                    Instance = LoginViewModel(loginRepository = loginRepository, preferences = loginPreferences)
                 }
                 Instance!!
             }

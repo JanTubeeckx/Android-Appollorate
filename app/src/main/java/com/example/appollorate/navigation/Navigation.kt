@@ -12,6 +12,7 @@ import com.example.appollorate.compose.formcharacteristics.cover.CoverFormChars
 import com.example.appollorate.compose.formcharacteristics.cover.CoverMaterialScreen
 import com.example.appollorate.compose.home.HomeScreen
 import com.example.appollorate.compose.identification.IdentificationScreen
+import com.example.appollorate.compose.inventories.InventoryOverview
 import com.example.appollorate.compose.menu.StartScreen
 import com.example.appollorate.compose.protection.ProtectionScreen
 import com.example.appollorate.compose.utils.AppolloRateNavigationType
@@ -78,6 +79,9 @@ fun NavComponent(
             ),
         ) {
             CoverMaterialScreen(navigationType = navigationType, navigateUp = navigateUp)
+        }
+        composable(route = NavigationOverview.Inventories.name) {
+            InventoryOverview(navigationType = navigationType)
         }
     }
 }

@@ -12,7 +12,6 @@ interface LoginRepository {
 
 class LoginRepositoryImpl(
     private val loginApiService: LoginApiService,
-    private val preferences: LoginPreferences,
 ) : LoginRepository {
     @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
     override suspend fun login(loginRequest: LoginRequest): Result<LoginResponse> {
