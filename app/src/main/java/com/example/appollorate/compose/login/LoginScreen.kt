@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -94,8 +95,48 @@ fun LoginScreen(
                         )
                     }
                 } else if (loginViewModel.loginApiState == LoginApiState.Error) {
-                    Text(text = "Fout")
-                } else {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                            .padding(24.dp),
+                    ) {
+                        Text(
+                            text = "Inloggen mislukt",
+                            fontSize = 36.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            textAlign = TextAlign.Center,
+                        )
+                        Spacer(modifier = Modifier.height(36.dp))
+                        Text(
+                            text = "De ingevoerde inloggegevens zijn niet correct.",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            textAlign = TextAlign.Center,
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "Probeer het opnieuw.",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            textAlign = TextAlign.Center,
+                        )
+                        Spacer(modifier = Modifier.height(36.dp))
+                        TextButton(
+                            onClick = {
+                                loginViewModel.retryLogin()
+                            },
+                            shape = RoundedCornerShape(5.dp),
+                        ) {
+                            Text(
+                                text = "Log opnieuw in",
+                                fontSize = 20.sp,
+                            )
+                        }
+                    }
+                } else if (!loginState.loggingIn || loginViewModel.loginApiState == LoginApiState.Error) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.SpaceBetween,

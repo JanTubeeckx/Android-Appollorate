@@ -56,6 +56,13 @@ class LoginViewModel(
         }
     }
 
+    fun retryLogin() {
+        loginApiState = LoginApiState.Loading
+        _uiState.update {
+            it.copy(loggingIn = false)
+        }
+    }
+
     fun loginUser() {
         viewModelScope.launch {
             val loginRequest = LoginRequest(

@@ -4,7 +4,7 @@ data class LoginState(
     val email: String = "",
     val password: String = "",
     val showLogin: Boolean = true,
-    val loggingIn: Boolean = false,
+    var loggingIn: Boolean = false,
     var isPasswordVisible: Boolean = false,
 )
 
