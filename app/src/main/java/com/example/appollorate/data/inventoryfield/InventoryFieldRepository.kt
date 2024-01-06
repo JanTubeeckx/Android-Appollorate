@@ -7,7 +7,6 @@ import com.example.appollorate.api.inventoryfield.getInventoryFieldsAsFlow
 import com.example.appollorate.data.model.InventoryField
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import java.net.SocketTimeoutException
 
 interface InventoryFieldRepository {
@@ -25,10 +24,6 @@ class CachingInventoryFieldRepository(
     override fun getInventoryFieldsByInventoryStepId(stepId: String): Flow<List<InventoryField>> {
         return inventoryFieldDao.getInventoryFieldsByInventoryStepId(stepId).map {
             it.asDomainInventoryFields()
-        }.onEach {
-          /*  if (it.isEmpty()) {
-                refresh()
-            }*/
         }
     }
 

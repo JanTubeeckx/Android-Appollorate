@@ -44,7 +44,6 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
     val client = OkHttpClient.Builder().apply {
         this.addInterceptor { chain ->
             val token = runBlocking { loginPreferences.getLoginToken() }
-            println(token)
             val request = chain.request().newBuilder().addHeader("Authorization", "Bearer $token").build()
             chain.proceed(request)
         }

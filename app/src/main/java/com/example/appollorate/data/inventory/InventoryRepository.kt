@@ -6,7 +6,6 @@ import com.example.appollorate.api.inventory.getInventorySummariesAsFlow
 import com.example.appollorate.data.model.InventorySummary
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import java.net.SocketTimeoutException
 
 interface InventoryRepository {
@@ -24,7 +23,7 @@ class CachingInventoryRepository(
     override fun getInventorySummaries(): Flow<List<InventorySummary>> {
         return inventoryDao.getInventorySummaries().map {
             it.asDomainInventorySummaries()
-        }.onEach { }
+        }
     }
 
     override suspend fun insertInventorySummary(inventorySummary: InventorySummary) {
