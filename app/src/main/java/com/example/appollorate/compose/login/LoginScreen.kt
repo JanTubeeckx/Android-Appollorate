@@ -93,6 +93,8 @@ fun LoginScreen(
                             color = MaterialTheme.colorScheme.primary,
                         )
                     }
+                } else if (loginViewModel.loginApiState == LoginApiState.Error) {
+                    Text(text = "Fout")
                 } else {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -144,7 +146,9 @@ fun LoginScreen(
                                 onClick = {
                                     loginViewModel.setLoggingIn()
                                     loginViewModel.loginUser()
-                                    onDismissRequest()
+                                    if (loginViewModel.loginApiState == LoginApiState.Success) {
+                                        onDismissRequest()
+                                    }
                                 },
                                 shape = RoundedCornerShape(5.dp),
                             ) {

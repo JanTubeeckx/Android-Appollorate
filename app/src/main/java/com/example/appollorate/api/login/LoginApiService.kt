@@ -6,7 +6,7 @@ import retrofit2.http.POST
 
 interface LoginApiService {
     @POST("/api/users/login")
-    suspend fun loginUser(@Body loginRequest: LoginRequest): LoginResponse
+    suspend fun loginUser(@Body loginRequest: LoginRequest): Result<LoginResponse>
 
     @GET("/api/users/{userId}")
     suspend fun getUserDetails()

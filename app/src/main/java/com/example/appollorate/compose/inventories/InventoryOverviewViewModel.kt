@@ -1,3 +1,10 @@
 package com.example.appollorate.compose.inventories
 
-class InventoryOverviewViewModel
+import com.example.appollorate.data.model.InventorySummary
+
+class InventoryOverviewViewModel() {
+
+    data class InventoryScreenState(
+        val inventoryList: List<InventorySummary> = mutableListOf(),
+    )
+}

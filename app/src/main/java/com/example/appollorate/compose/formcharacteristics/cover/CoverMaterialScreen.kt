@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.appollorate.R
 import com.example.appollorate.compose.inventoryfield.InventoryField
+import com.example.appollorate.compose.inventoryfield.InventoryFieldViewModel
 import com.example.appollorate.compose.utils.AppolloRateNavigationType
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,6 +30,7 @@ import com.example.appollorate.compose.utils.AppolloRateNavigationType
 fun CoverMaterialScreen(
     navigationType: AppolloRateNavigationType,
     coverMaterialScreenViewModel: CoverMaterialScreenViewModel = viewModel(factory = CoverMaterialScreenViewModel.Factory),
+    inventoryFieldViewModel: InventoryFieldViewModel = viewModel(factory = InventoryFieldViewModel.Factory),
     navigateUp: () -> Unit,
 ) {
     val inventoryFieldListState by coverMaterialScreenViewModel.uiState.collectAsState()
@@ -52,7 +54,10 @@ fun CoverMaterialScreen(
             }
             item {
                 ElevatedButton(
-                    onClick = { navigateUp() },
+                    onClick = {
+                        inventoryFieldViewModel.sendInput()
+                        navigateUp()
+                    },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary,
                     ),

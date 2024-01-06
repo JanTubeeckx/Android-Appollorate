@@ -1,6 +1,5 @@
 package com.example.appollorate.compose.login
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -63,11 +62,12 @@ class LoginViewModel(
                 email = _uiState.value.email,
                 password = _uiState.value.password,
             )
-            val result = loginRepository.login(loginRequest)
-            if (result != null) {
+            loginRepository.login(loginRequest).onSuccess {
                 loginApiState = LoginApiState.Success
+            }.onFailure {
+                println("loginerror")
+                loginApiState = LoginApiState.Error
             }
-            Log.i("Test", "$result")
         }
     }
 

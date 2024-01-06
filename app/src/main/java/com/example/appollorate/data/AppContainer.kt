@@ -6,6 +6,7 @@ import com.example.appollorate.api.inventoryfield.InventoryFieldApiService
 import com.example.appollorate.api.inventorystep.InventoryStepApiService
 import com.example.appollorate.api.login.LoginApiService
 import com.example.appollorate.data.database.AppDatabase
+import com.example.appollorate.data.exception.ResultCallAdapterFactory
 import com.example.appollorate.data.inventoryfield.CachingInventoryFieldRepository
 import com.example.appollorate.data.inventoryfield.InventoryFieldRepository
 import com.example.appollorate.data.inventorystep.CachingInventoryStepRepository
@@ -48,13 +49,12 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
     }.build()
 
     private val gson = GsonBuilder().setLenient().create()
-
-    // private val baseUrl = "https://inventappwebservices.azurewebsites.net"
-    private val baseUrl = "http://10.0.2.2:9000"
+    private val baseUrl = "https://inventappwebservices.azurewebsites.net"
     private val retrofit = Retrofit.Builder()
         .baseUrl(baseUrl)
         .client(client)
         .addConverterFactory(ScalarsConverterFactory.create())
+        .addCallAdapterFactory(ResultCallAdapterFactory())
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
 
