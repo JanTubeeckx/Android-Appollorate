@@ -159,7 +159,7 @@ fun IdentificationScreen(
                 onClick = {
                     closeCamera()
                     val result = identificationScreenViewModel.sendImage(photoUri)
-                    inventoryFieldViewModel.setInput("Image", result)
+                    inventoryFieldViewModel.setInput("imageLabel", result)
                 },
                 contentPadding = PaddingValues(0.dp),
                 modifier = Modifier.width(40.dp),

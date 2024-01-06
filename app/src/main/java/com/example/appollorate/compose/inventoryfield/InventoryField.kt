@@ -37,8 +37,8 @@ fun InventoryField(
     when (inventoryField.type) {
         "text" -> {
             OutlinedTextField(
-                value = inventoryFieldState.input[inventoryField.id] ?: "",
-                onValueChange = { inventoryFieldViewModel.setInput(inventoryField.id, it) },
+                value = inventoryFieldState.input[inventoryField.description] ?: "",
+                onValueChange = { inventoryFieldViewModel.setInput(inventoryField.description, it) },
                 modifier = Modifier.fillMaxWidth(),
                 label = { Text(text = inventoryField.description) },
             )
@@ -46,22 +46,22 @@ fun InventoryField(
         }
         "select" -> {
             ExposedDropdownMenuBox(
-                expanded = inventoryFieldState.showDropDown[inventoryField.id] ?: false,
-                onExpandedChange = { inventoryFieldViewModel.showDropDown(inventoryField.id) },
+                expanded = inventoryFieldState.showDropDown[inventoryField.description] ?: false,
+                onExpandedChange = { inventoryFieldViewModel.showDropDown(inventoryField.description) },
             ) {
                 OutlinedTextField(
-                    value = inventoryFieldState.dropDownValue[inventoryField.id] ?: "",
+                    value = inventoryFieldState.dropDownValue[inventoryField.description] ?: "",
                     onValueChange = {},
                     readOnly = true,
-                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = inventoryFieldState.showDropDown[inventoryField.id] ?: false) },
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = inventoryFieldState.showDropDown[inventoryField.description] ?: false) },
                     modifier = Modifier
                         .menuAnchor()
                         .fillMaxWidth(),
                     label = { Text(inventoryField.description) },
                 )
                 ExposedDropdownMenu(
-                    expanded = inventoryFieldState.showDropDown[inventoryField.id] ?: false,
-                    onDismissRequest = { inventoryFieldViewModel.showDropDown(inventoryField.id) },
+                    expanded = inventoryFieldState.showDropDown[inventoryField.description] ?: false,
+                    onDismissRequest = { inventoryFieldViewModel.showDropDown(inventoryField.description) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(color = MaterialTheme.colorScheme.onPrimary),
@@ -75,8 +75,8 @@ fun InventoryField(
                                 )
                             },
                             onClick = {
-                                inventoryFieldViewModel.setInput(inventoryField.id, dropdownValue.description)
-                                inventoryFieldViewModel.hideDropDown(inventoryField.id, dropdownValue.description)
+                                inventoryFieldViewModel.setInput(inventoryField.description, dropdownValue.description)
+                                inventoryFieldViewModel.hideDropDown(inventoryField.description, dropdownValue.description)
                             },
                             modifier = Modifier.fillMaxWidth(),
                         )
@@ -87,8 +87,8 @@ fun InventoryField(
         }
         "number" -> {
             OutlinedTextField(
-                value = inventoryFieldState.input[inventoryField.id] ?: "",
-                onValueChange = { inventoryFieldViewModel.setInput(inventoryField.id, it) },
+                value = inventoryFieldState.input[inventoryField.description] ?: "",
+                onValueChange = { inventoryFieldViewModel.setInput(inventoryField.description, it) },
                 modifier = Modifier.fillMaxWidth(),
                 label = { Text(text = inventoryField.description) },
             )
@@ -111,7 +111,7 @@ fun InventoryField(
                         ) {
                             RadioButton(
                                 selected = (it == inventoryFieldState.selectedRadioOption),
-                                onClick = { inventoryFieldViewModel.setRadioInput(inventoryField.id, it) },
+                                onClick = { inventoryFieldViewModel.setRadioInput(inventoryField.description, it) },
                             )
                             Text(
                                 text = it,

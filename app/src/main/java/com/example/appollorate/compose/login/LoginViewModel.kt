@@ -73,7 +73,7 @@ class LoginViewModel(
             )
             loginRepository.login(loginRequest).onSuccess {
                 preferences.saveLoginToken(it.token)
-                preferences.saveUserName(it.user.email)
+                preferences.saveUserName(it.user.id)
                 loginApiState = LoginApiState.Success
             }.onFailure {
                 println("loginerror")
